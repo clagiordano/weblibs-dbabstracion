@@ -1,6 +1,6 @@
 {
  "m_name": "weblibs-dbabstraction",
- "m_isActive": false,
+ "m_isActive": true,
  "m_importFileSpec": "*.php;*.inc;*.phtml;*.js;*.html;*.css;*.scss;*.json;*.xml;*.ini;*.md;*.txt;*.text;.htaccess",
  "m_excludeFolders": ".git;.svn;.codelite;.clang",
  "settings": {
