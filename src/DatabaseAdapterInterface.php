@@ -4,7 +4,7 @@ namespace clagiordano\weblibs\dbabstraction;
 
 /**
  * @class \clagiordano\weblibs\dbabstraction\DatabaseAdapterInterface
- * @brief 
+ * @brief
  */
 interface DatabaseAdapterInterface
 {

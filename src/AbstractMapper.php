@@ -4,7 +4,7 @@ namespace clagiordano\weblibs\dbabstraction;
 
 /**
  * @class \clagiordano\weblibs\dbabstraction\AbstractMapper
- * @brief 
+ * @brief
  */
 class AbstractMapper implements MapperInterface
 {
@@ -15,17 +15,19 @@ class AbstractMapper implements MapperInterface
     /**
      * Constructor
      */
-    public function __construct(DatabaseDatabaseAdapterInterface $adapter, array $entityOptions = array())
+    public function __construct(DatabaseAdapterInterface $adapter, array $entityOptions = [])
     {
         $this->adapter = $adapter;
         // set the entity table is the option has been specified
         if (isset($entityOptions['entityTable'])) {
             $this->setEntityTable($entityOtions['entityTable']);
         }
+        
         // set the entity class is the option has been specified
         if (isset($entityOptions['entityClass'])) {
             $this->setEntityClass($entityOtions['entityClass']);
         }
+        
         // check the entity options
         $this->_checkEntityOptions();
     }
@@ -153,7 +155,7 @@ class AbstractMapper implements MapperInterface
     }
 
     /**
-     * Reconstitute an entity with the data retrieved from 
+     * Reconstitute an entity with the data retrieved from
      * the storage (implementation delegated to concrete mappers)
      */
     abstract protected function _createEntity(array $data);

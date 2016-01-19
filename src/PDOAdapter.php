@@ -6,20 +6,20 @@ use PDO;
 
 /**
  * @class \clagiordano\weblibs\dbabstraction\PDOAdapter
- * @brief 
+ * @brief
  */
 class PDOAdapter implements DatabaseAdapterInterface
 {
     /**
      * Constructor
-     * 
+     *
      * @param  string $db_host
      * @param  string $db_user
      * @param  string $db_password
      * @param  string $db_name
      * @param  string $driver
      * @param  string $db_charset
-     * 
+     *
      * @return clagiordano\weblibs\dbabstraction\PDOAdapter;
      */
     public function __construct(
@@ -47,8 +47,8 @@ class PDOAdapter implements DatabaseAdapterInterface
     
     /**
      * @brief Database connection
-     * 
-     * @return 
+     *
+     * @return
      */
     public function connect()
     {
