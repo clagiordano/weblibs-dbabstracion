@@ -17,10 +17,11 @@ class PDOAdapter implements DatabaseAdapterInterface
      * @param  string $db_user
      * @param  string $db_password
      * @param  string $db_name
-     * @param  string $driver
+     * @param string $db_driver
      * @param  string $db_charset
      *
-     * @return clagiordano\weblibs\dbabstraction\PDOAdapter;
+     * @param bool $db_persistent
+     * @internal param string $driver
      */
     public function __construct(
         $db_host,
@@ -30,12 +31,13 @@ class PDOAdapter implements DatabaseAdapterInterface
         $db_driver = "mysql",
         $db_charset = "utf8",
         $db_persistent = true
-    ) {
+    )
+    {
         $this->dbHostname = $db_host;
         $this->dbUsername = $db_user;
         $this->dbPassword = $db_password;
         $this->dbName = $db_name;
-        
+
         $this->dbDriver = $db_driver;
         $this->dbCharset = $db_charset;
 
@@ -44,11 +46,11 @@ class PDOAdapter implements DatabaseAdapterInterface
             PDO::ATTR_PERSISTENT => $db_persistent
         ];
     }
-    
+
     /**
      * @brief Database connection
-     *
-     * @return
+     * @return PDO
+     * @throws \Exception
      */
     public function connect()
     {
@@ -62,7 +64,7 @@ class PDOAdapter implements DatabaseAdapterInterface
                 "$db_password",
                 $this->DriverOptions
             );
-            $this->Logger       = new Logger($this->dbConnection);
+            $this->Logger = new Logger($this->dbConnection);
 
             return $this->dbConnection;
         } catch (\PDOException $ex) {
@@ -70,7 +72,16 @@ class PDOAdapter implements DatabaseAdapterInterface
             throw new \Exception(__METHOD__ . ": " . $ex->getMessage());
         }
     }
-    
+
+    /**
+     * Close automatically the database connection when the instance
+     * of the class is destroyed
+     */
+    public function __destruct()
+    {
+        $this->disconnect();
+    }
+
     /**
      * Close explicitly the database connection
      */
@@ -79,18 +90,9 @@ class PDOAdapter implements DatabaseAdapterInterface
         if ($this->dbConnection === null) {
             return false;
         }
-        
+
         $this->dbConnection = null;
-        
+
         return true;
-    }
-    
-    /**
-     * Close automatically the database connection when the instance
-     * of the class is destroyed
-     */
-    public function __destruct()
-    {
-        $this->disconnect();
     }
 }
