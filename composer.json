@@ -1,6 +1,6 @@
 {
   "name": "clagiordano/weblibs-dbabstraction",
-  "description": "Abstraction library for the database",
+  "description": "Abstraction library for the database and ORM modules",
   "type": "library",
   "homepage": "https://github.com/clagiordano/weblibs-dbabstraction.git",
   "license": "gpl3",
