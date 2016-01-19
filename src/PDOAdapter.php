@@ -10,6 +10,15 @@ use PDO;
  */
 class PDOAdapter implements DatabaseAdapterInterface
 {
+    private $dbHostname;
+    private $dbUsername;
+    private $dbPassword;
+    private $dbName;
+    private $dbDriver;
+    private $dbCharset;
+    private $driverOptions;
+    private $dbConnection;
+
     /**
      * Constructor
      *
@@ -41,7 +50,7 @@ class PDOAdapter implements DatabaseAdapterInterface
         $this->dbDriver = $db_driver;
         $this->dbCharset = $db_charset;
 
-        $this->DriverOptions = [
+        $this->driverOptions = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_PERSISTENT => $db_persistent
         ];
@@ -59,18 +68,19 @@ class PDOAdapter implements DatabaseAdapterInterface
          */
         try {
             $this->dbConnection = new PDO(
-                "$driver:host=$db_host;dbname=$db_name;charset=$db_charset",
-                "$db_user",
-                "$db_password",
-                $this->DriverOptions
+                "{$this->dbDriver}:host={$this->dbHostname};dbname={$this->dbName};charset={$this->dbCharset}",
+                "{$this->dbUsername}",
+                "{$this->dbPassword}",
+                $this->driverOptions
             );
-            $this->Logger = new Logger($this->dbConnection);
 
-            return $this->dbConnection;
+            //$this->Logger = new Logger($this->dbConnection);
         } catch (\PDOException $ex) {
             // Error during database connection, check params.
             throw new \Exception(__METHOD__ . ": " . $ex->getMessage());
         }
+
+        return $this->dbConnection;
     }
 
     /**

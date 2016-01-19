@@ -136,7 +136,7 @@ abstract class AbstractMapper implements MapperInterface
         $collection = new CollectionEntityCollection;
         $this->adapter->select($this->entityTable, $conditions);
         while ($data = $this->adapter->fetch()) {
-            $collection[] = $this->_createEntity($data);
+            $collection[] = $this->createEntity($data);
         }
         return $collection;
     }

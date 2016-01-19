@@ -8,8 +8,14 @@ namespace clagiordano\weblibs\dbabstraction;
  */
 interface DatabaseAdapterInterface
 {
+    /**
+     * @return mixed
+     */
     public function connect();
 
+    /**
+     * @return mixed
+     */
     public function disconnect();
 
     /**
@@ -18,6 +24,9 @@ interface DatabaseAdapterInterface
      */
     public function query($queryString);
 
+    /**
+     * @return mixed
+     */
     public function fetch();
 
     /**
@@ -53,9 +62,18 @@ interface DatabaseAdapterInterface
      */
     public function delete($table, $conditions);
 
+    /**
+     * @return mixed
+     */
     public function getInsertId();
 
+    /**
+     * @return mixed
+     */
     public function countRows();
 
+    /**
+     * @return mixed
+     */
     public function getAffectedRows();
 }
