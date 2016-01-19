@@ -6,7 +6,7 @@ namespace clagiordano\weblibs\dbabstraction;
  * @class \clagiordano\weblibs\dbabstraction\DatabaseAdapterInterface
  * @brief 
  */
-interface DatabaseAdapterInterface 
+interface DatabaseAdapterInterface
 {
     public function connect();
     

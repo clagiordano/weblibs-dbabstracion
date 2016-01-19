@@ -8,7 +8,7 @@ use PDO;
  * @class \clagiordano\weblibs\dbabstraction\PDOAdapter
  * @brief 
  */
-class PDOAdapter implements DatabaseAdapterInterface 
+class PDOAdapter implements DatabaseAdapterInterface
 {
     /**
      * Constructor
@@ -73,7 +73,7 @@ class PDOAdapter implements DatabaseAdapterInterface
     
     /**
      * Close explicitly the database connection
-     */ 
+     */
     public function disconnect()
     {
         if ($this->dbConnection === null) {
@@ -88,7 +88,7 @@ class PDOAdapter implements DatabaseAdapterInterface
     /**
      * Close automatically the database connection when the instance
      * of the class is destroyed
-     */ 
+     */
     public function __destruct()
     {
         $this->disconnect();
