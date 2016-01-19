@@ -66,4 +66,27 @@ class PDOAdapter implements DatabaseAdapterInterface
             throw new \Exception(__METHOD__ . ": " . $ex->getMessage());
         }
     }
+    
+    /**
+     * Close explicitly the database connection
+     */ 
+    public function disconnect()
+    {
+        if ($this->dbConnection === null) {
+            return false;
+        }
+        
+        $this->dbConnection = null;
+        
+        return true;
+    }
+    
+    /**
+     * Close automatically the database connection when the instance
+     * of the class is destroyed
+     */ 
+    public function __destruct()
+    {
+        $this->disconnect();
+    }
 }
