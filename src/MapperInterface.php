@@ -3,7 +3,8 @@
 namespace clagiordano\weblibs\dbabstraction;
 
 /**
- * 
+ * @class \clagiordano\weblibs\dbabstraction\MapperInterface
+ * @brief 
  */
 interface MapperInterface
 {

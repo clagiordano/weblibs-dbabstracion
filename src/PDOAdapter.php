@@ -4,6 +4,10 @@ namespace clagiordano\weblibs\dbabstraction;
 
 use PDO;
 
+/**
+ * @class \clagiordano\weblibs\dbabstraction\PDOAdapter
+ * @brief 
+ */
 class PDOAdapter implements DatabaseAdapterInterface 
 {
     /**
