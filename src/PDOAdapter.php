@@ -105,4 +105,90 @@ class PDOAdapter implements DatabaseAdapterInterface
 
         return true;
     }
+
+    /**
+     * @param $queryString
+     * @return mixed
+     */
+    public function query($queryString)
+    {
+        // TODO: Implement query() method.
+    }
+
+    /**
+     * @return mixed
+     */
+    public function fetch()
+    {
+        // TODO: Implement fetch() method.
+    }
+
+    /**
+     * @param $table
+     * @param string $conditions
+     * @param string $fields
+     * @param string $order
+     * @param null $limit
+     * @param null $offset
+     * @return mixed
+     */
+    public function select($table, $conditions = '', $fields = '*', $order = '', $limit = null, $offset = null)
+    {
+        // TODO: Implement select() method.
+    }
+
+    /**
+     * @param $table
+     * @param array $data
+     * @return mixed
+     */
+    public function insert($table, array $data)
+    {
+        // TODO: Implement insert() method.
+    }
+
+    /**
+     * @param $table
+     * @param array $data
+     * @param $conditions
+     * @return mixed
+     */
+    public function update($table, array $data, $conditions)
+    {
+        // TODO: Implement update() method.
+    }
+
+    /**
+     * @param $table
+     * @param $conditions
+     * @return mixed
+     */
+    public function delete($table, $conditions)
+    {
+        // TODO: Implement delete() method.
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInsertId()
+    {
+        // TODO: Implement getInsertId() method.
+    }
+
+    /**
+     * @return mixed
+     */
+    public function countRows()
+    {
+        // TODO: Implement countRows() method.
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAffectedRows()
+    {
+        // TODO: Implement getAffectedRows() method.
+    }
 }
