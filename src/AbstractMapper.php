@@ -2,6 +2,8 @@
 
 namespace clagiordano\weblibs\dbabstraction;
 
+use InvalidArgumentException;
+
 /**
  * @class \clagiordano\weblibs\dbabstraction\AbstractMapper
  * @brief
@@ -71,7 +73,7 @@ abstract class AbstractMapper implements MapperInterface
     public function setEntityTable($entityTable)
     {
         if (!is_string($entityTable) || empty($entityTable)) {
-            throw new \InvalidArgumentException('The entity table is invalid.');
+            throw new InvalidArgumentException('The entity table is invalid.');
         }
         $this->entityTable = $entityTable;
 
@@ -94,7 +96,7 @@ abstract class AbstractMapper implements MapperInterface
     public function setEntityClass($entityClass)
     {
         if (!is_subclass_of($entityClass, 'BlogModelAbstractEntity')) {
-            throw new \InvalidArgumentException('The entity class is invalid.');
+            throw new InvalidArgumentException('The entity class is invalid.');
         }
         $this->entityClass = $entityClass;
         return $this;
@@ -109,7 +111,7 @@ abstract class AbstractMapper implements MapperInterface
     {
         $this->adapter->select($this->entityTable, "id = {$id}");
 
-        if ($data = $this->adapter->fetch()) {
+        if (($data = $this->adapter->fetch()) !== false) {
             return $this->createEntity($data);
         }
 
@@ -133,11 +135,13 @@ abstract class AbstractMapper implements MapperInterface
      */
     public function find($conditions = '')
     {
-        $collection = new CollectionEntityCollection;
+        $collection = new \CollectionEntityCollection;
         $this->adapter->select($this->entityTable, $conditions);
-        while ($data = $this->adapter->fetch()) {
+
+        if (($data = $this->adapter->fetch()) !== false) {
             $collection[] = $this->createEntity($data);
         }
+
         return $collection;
     }
 
@@ -149,7 +153,7 @@ abstract class AbstractMapper implements MapperInterface
     public function insert($entity)
     {
         if (!$entity instanceof $this->entityClass) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'The entity to be inserted must be an instance of ' . $this->entityClass . '.'
             );
         }
@@ -164,10 +168,11 @@ abstract class AbstractMapper implements MapperInterface
     public function update($entity)
     {
         if (!$entity instanceof $this->entityClass) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'The entity to be updated must be an instance of ' . $this->entityClass . '.'
             );
         }
+
         $id = $entity->id;
         $data = $entity->toArray();
         unset($data['id']);

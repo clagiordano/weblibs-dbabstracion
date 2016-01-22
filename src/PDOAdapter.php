@@ -40,8 +40,7 @@ class PDOAdapter implements DatabaseAdapterInterface
         $db_driver = "mysql",
         $db_charset = "utf8",
         $db_persistent = true
-    )
-    {
+    ) {
         $this->dbHostname = $db_host;
         $this->dbUsername = $db_user;
         $this->dbPassword = $db_password;
@@ -52,7 +51,7 @@ class PDOAdapter implements DatabaseAdapterInterface
 
         $this->driverOptions = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_PERSISTENT => $db_persistent
+            PDO::ATTR_PERSISTENT => $db_persistent,
         ];
     }
 
@@ -94,7 +93,7 @@ class PDOAdapter implements DatabaseAdapterInterface
 
     /**
      * Close explicitly the database connection
-     * 
+     *
      * @return boolean
      */
     public function disconnect()
