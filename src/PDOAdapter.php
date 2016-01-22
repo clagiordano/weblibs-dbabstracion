@@ -94,6 +94,8 @@ class PDOAdapter implements DatabaseAdapterInterface
 
     /**
      * Close explicitly the database connection
+     * 
+     * @return boolean
      */
     public function disconnect()
     {
