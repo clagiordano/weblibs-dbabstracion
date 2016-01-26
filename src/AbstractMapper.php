@@ -104,12 +104,12 @@ abstract class AbstractMapper implements MapperInterface
 
     /**
      * Find an entity by its ID
-     * @param $id
+     * @param $entityId
      * @return mixed|null
      */
-    public function findById($id)
+    public function findById($entityId)
     {
-        $this->adapter->select($this->entityTable, "id = {$id}");
+        $this->adapter->select($this->entityTable, "id = {$entityId}");
 
         if (($data = $this->adapter->fetch()) !== false) {
             return $this->createEntity($data);
@@ -173,23 +173,23 @@ abstract class AbstractMapper implements MapperInterface
             );
         }
 
-        $id = $entity->id;
+        $entityId = $entity->id;
         $data = $entity->toArray();
-        unset($data['id']);
-        return $this->adapter->update($this->entityTable, $data, "id = $id");
+        unset($data['entityId']);
+        return $this->adapter->update($this->entityTable, $data, "entityId = $entityId");
     }
 
     /**
      * Delete one or more entities from the storage
-     * @param $id
+     * @param $entityId
      * @param string $col
      * @return mixed
      */
-    public function delete($id, $col = 'id')
+    public function delete($entityId, $col = 'id')
     {
-        if ($id instanceof $this->entityClass) {
-            $id = $id->id;
+        if ($entityId instanceof $this->entityClass) {
+            $entityId = $entityId->id;
         }
-        return $this->adapter->delete($this->entityTable, "$col = $id");
+        return $this->adapter->delete($this->entityTable, "$col = $entityId");
     }
 }

@@ -9,10 +9,10 @@ namespace clagiordano\weblibs\dbabstraction;
 interface MapperInterface
 {
     /**
-     * @param $id
+     * @param $entityId
      * @return mixed
      */
-    public function findById($id);
+    public function findById($entityId);
 
     /**
      * @param string $criteria

@@ -22,36 +22,36 @@ class PDOAdapter implements DatabaseAdapterInterface
     /**
      * Constructor
      *
-     * @param  string $db_host
-     * @param  string $db_user
-     * @param  string $db_password
-     * @param  string $db_name
-     * @param string $db_driver
-     * @param  string $db_charset
+     * @param  string $dbHost
+     * @param  string $dbUser
+     * @param  string $dbPassword
+     * @param  string $dbName
+     * @param string $dbDriver
+     * @param  string $dbCharset
      *
-     * @param bool $db_persistent
+     * @param bool $isPersistent
      * @internal param string $driver
      */
     public function __construct(
-        $db_host,
-        $db_user,
-        $db_password,
-        $db_name,
-        $db_driver = "mysql",
-        $db_charset = "utf8",
-        $db_persistent = true
+        $dbHost,
+        $dbUser,
+        $dbPassword,
+        $dbName,
+        $dbDriver = "mysql",
+        $dbCharset = "utf8",
+        $isPersistent = true
     ) {
-        $this->dbHostname = $db_host;
-        $this->dbUsername = $db_user;
-        $this->dbPassword = $db_password;
-        $this->dbName = $db_name;
+        $this->dbHostname = $dbHost;
+        $this->dbUsername = $dbUser;
+        $this->dbPassword = $dbPassword;
+        $this->dbName = $dbName;
 
-        $this->dbDriver = $db_driver;
-        $this->dbCharset = $db_charset;
+        $this->dbDriver = $dbDriver;
+        $this->dbCharset = $dbCharset;
 
         $this->driverOptions = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_PERSISTENT => $db_persistent,
+            PDO::ATTR_PERSISTENT => $isPersistent,
         ];
     }
 

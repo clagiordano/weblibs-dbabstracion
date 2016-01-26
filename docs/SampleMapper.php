@@ -19,16 +19,16 @@ class SampleMapper extends AbstractMapper
 
     /**
      * Delete an existing comment
-     * @param $id
+     * @param $entityId
      * @param string $col
      * @return mixed
      */
-    public function delete($id, $col = 'id')
+    public function delete($entityId, $col = 'id')
     {
-        if ($id instanceof SampleEntity) {
-            $id = $id->id;
+        if ($entityId instanceof SampleEntity) {
+            $entityId = $entityId->id;
         }
-        return $this->adapter->delete($this->entityTable, "$col = $id");
+        return $this->adapter->delete($this->entityTable, "$col = $entityId");
     }
 
     /**
