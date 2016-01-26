@@ -73,7 +73,6 @@ class PDOAdapter implements DatabaseAdapterInterface
                 $this->driverOptions
             );
 
-            //$this->Logger = new Logger($this->dbConnection);
         } catch (\PDOException $ex) {
             // Error during database connection, check params.
             throw new \Exception(__METHOD__ . ": " . $ex->getMessage());
