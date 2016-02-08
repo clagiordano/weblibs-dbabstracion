@@ -18,6 +18,8 @@ class PDOAdapter implements DatabaseAdapterInterface
     private $dbCharset;
     private $driverOptions;
     private $dbConnection;
+    private $executionStatus;
+    private $lastInsertedId;
 
     /**
      * Constructor
@@ -30,7 +32,6 @@ class PDOAdapter implements DatabaseAdapterInterface
      * @param  string $dbCharset
      *
      * @param bool $isPersistent
-     * @internal param string $driver
      */
     public function __construct(
         $dbHost,
@@ -107,12 +108,39 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
+     * Execute the specified query
+     *
      * @param $queryString
      * @return mixed
      */
     public function query($queryString)
     {
-        // TODO: Implement query() method.
+        if (!is_string($queryString) || empty($queryString)) {
+            throw new \InvalidArgumentException(
+                __METHOD__ . ': The specified query is not valid.'
+            );
+        }
+        
+        $this->connect();
+        $statement = $this->dbConnection->prepare($queryString);
+        
+        try {
+            // start transaction
+            $this->dbConnection->beginTransaction();
+            // execute the query and return a status
+            var_dump($statement->execute());
+            // finally execute the query
+            $this->executionStatus = $this->dbConnection->commit();
+            var_dump($this->executionStatus);
+            // get last inserted id if present
+            $this->lastInsertedId = $this->dbConnection->lastInsertId();
+        } catch (\PDOException $ex) {
+            // If an error occurs, execute rollback
+            $this->dbConnection->rollback();
+            // Return execution status to false
+            $this->executionStatus = false;
+            //exit();
+        }
     }
 
     /**
