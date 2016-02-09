@@ -143,9 +143,11 @@ class PDOAdapter implements DatabaseAdapterInterface
             
             // Return execution status to false
             $this->executionStatus = false;
-            $this->resourceHandle = null;
+            $this->resourceHandle->closeCursor();
             
-            throw new \Exception(__METHOD__ . ": {$ex->getMessage()}");
+            throw new \RuntimeException(
+                __METHOD__ . ": {$ex->getMessage()}"
+            );
         }
         
         return $this->resourceHandle;
@@ -234,5 +236,20 @@ class PDOAdapter implements DatabaseAdapterInterface
     public function getAffectedRows()
     {
         // TODO: Implement getAffectedRows() method.
+    }
+    
+    /**
+     * @brief 
+     * @return  
+     */
+    public function freeResult()
+    {
+        if ($this->resourceHandle === null) {
+            return false;
+        }
+        
+        $this->resourceHandle->closeCursor();
+        
+        return true;
     }
 }
