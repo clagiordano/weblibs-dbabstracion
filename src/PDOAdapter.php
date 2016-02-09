@@ -74,7 +74,6 @@ class PDOAdapter implements DatabaseAdapterInterface
                 "{$this->dbPassword}",
                 $this->driverOptions
             );
-
         } catch (\PDOException $ex) {
             // Error during database connection, check params.
             throw new \InvalidArgumentException(
