@@ -123,17 +123,17 @@ class PDOAdapter implements DatabaseAdapterInterface
         }
         
         $this->connect();
-        $statement = $this->dbConnection->prepare($queryString);
+        $this->resourceHandle = $this->dbConnection->prepare($queryString);
         
         try {
             // start transaction
             $this->dbConnection->beginTransaction();
             
             // execute the query and return a status
-            $this->executionStatus = $statement->execute();
+            $this->executionStatus = $this->resourceHandle->execute();
             
             // finally execute the query
-            $this->resourceHandle = $this->dbConnection->commit();
+            $this->dbConnection->commit();
             
             // get last inserted id if present
             $this->lastInsertedId = $this->dbConnection->lastInsertId();
@@ -145,7 +145,7 @@ class PDOAdapter implements DatabaseAdapterInterface
             $this->executionStatus = false;
             $this->resourceHandle = null;
             
-            throw new \Exception($ex->getMessage());
+            throw new \Exception(__METHOD__ . ": {$ex->getMessage()}");
         }
         
         return $this->resourceHandle;
