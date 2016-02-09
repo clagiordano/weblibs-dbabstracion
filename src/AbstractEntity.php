@@ -33,8 +33,11 @@ abstract class AbstractEntity
     public function __set($name, $value)
     {
         if (!in_array($name, $this->allowedFields)) {
-            throw new InvalidArgumentException("Setting the field '$name' is not allowed for this entity.");
+            throw new \InvalidArgumentException(
+                "Setting the field '$name' is not allowed for this entity."
+            );
         }
+        
         $mutator = 'set' . ucfirst($name);
         if (method_exists($this, $mutator) && is_callable([$this, $mutator])) {
             $this->$mutator($value);
@@ -51,7 +54,9 @@ abstract class AbstractEntity
     public function __get($name)
     {
         if (!in_array($name, $this->allowedFields)) {
-            throw new \InvalidArgumentException("Getting the field '$name' is not allowed for this entity.");
+            throw new \InvalidArgumentException(
+                "Getting the field '$name' is not allowed for this entity."
+            );
         }
 
         $accessor = 'get' . ucfirst($name);
@@ -63,7 +68,9 @@ abstract class AbstractEntity
             return $this->values[$name];
         }
 
-        throw new \InvalidArgumentException("The field '$name' has not been set for this entity yet.");
+        throw new \InvalidArgumentException(
+            "The field '$name' has not been set for this entity yet."
+        );
     }
 
     /**
@@ -74,8 +81,11 @@ abstract class AbstractEntity
     public function __isset($name)
     {
         if (!in_array($name, $this->allowedFields)) {
-            throw new \InvalidArgumentException("The field '$name' is not allowed for this entity.");
+            throw new \InvalidArgumentException(
+                "The field '$name' is not allowed for this entity."
+            );
         }
+        
         return isset($this->values[$name]);
     }
 
@@ -87,7 +97,9 @@ abstract class AbstractEntity
     public function __unset($name)
     {
         if (!in_array($name, $this->allowedFields)) {
-            throw new \InvalidArgumentException("Unsetting the field '$name' is not allowed for this entity.");
+            throw new \InvalidArgumentException(
+                "Unsetting the field '$name' is not allowed for this entity."
+            );
         }
 
         if (isset($this->values[$name])) {
@@ -95,7 +107,9 @@ abstract class AbstractEntity
             return true;
         }
 
-        throw new \InvalidArgumentException("The field '$name' has not been set for this entity yet.");
+        throw new \InvalidArgumentException(
+            "The field '$name' has not been set for this entity yet."
+        );
     }
 
     /**
