@@ -160,7 +160,7 @@ class PDOAdapter implements DatabaseAdapterInterface
      */
     public function fetch()
     {
-         if ($this->resourceHandle !== null) {
+        if ($this->resourceHandle !== null) {
             if (($row = $this->resourceHandle->fetch(\PDO::FETCH_ASSOC)) === false) {
                 $this->freeResult();
             }
@@ -241,8 +241,8 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
     
     /**
-     * @brief 
-     * @return  
+     * @brief
+     * @return
      */
     public function freeResult()
     {
