@@ -18,6 +18,19 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         );
     }
     
+    public function testFailedConnection()
+    {
+        $this->object = new PDOAdapter("localhosta", "invalid", "invalid", "sample");
+        
+        $this->assertInstanceOf(
+            'clagiordano\weblibs\dbabstraction\PDOAdapter',
+            $this->object
+        );
+        
+        $this->setExpectedException('InvalidArgumentException');
+        $this->object->connect();
+    }
+    
     public function testOne()
     {
         $resource = $this->object->query("SELECT * FROM tab_sample");
@@ -26,7 +39,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
             $resource
         );
         
-        print_r($resource->fetch());
-        print_r($resource->fetch());
+        print_r($this->object->fetch());
+        print_r($this->object->fetch());
     }
 }

@@ -77,7 +77,9 @@ class PDOAdapter implements DatabaseAdapterInterface
 
         } catch (\PDOException $ex) {
             // Error during database connection, check params.
-            throw new \Exception(__METHOD__ . ": " . $ex->getMessage());
+            throw new \InvalidArgumentException(
+                __METHOD__ . ": " . $ex->getMessage()
+            );
         }
 
         return $this->dbConnection;
@@ -159,7 +161,7 @@ class PDOAdapter implements DatabaseAdapterInterface
     public function fetch()
     {
          if ($this->resourceHandle !== null) {
-            if (($row = $this->resourceHandle->fetch(PDO::FETCH_ASSOC)) === false) {
+            if (($row = $this->resourceHandle->fetch(\PDO::FETCH_ASSOC)) === false) {
                 $this->freeResult();
             }
             
