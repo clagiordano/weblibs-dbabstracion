@@ -152,11 +152,19 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
-     * @return mixed
+     * @return array|false
      */
     public function fetch()
     {
-        // TODO: Implement fetch() method.
+         if ($this->resourceHandle !== null) {
+            if (($row = $this->resourceHandle->fetch(PDO::FETCH_ASSOC)) === false) {
+                $this->freeResult();
+            }
+            
+            return $row;
+        }
+        
+        return false;
     }
 
     /**

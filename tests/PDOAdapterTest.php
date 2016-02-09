@@ -21,7 +21,12 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
     public function testOne()
     {
         $resource = $this->object->query("SELECT * FROM tab_sample");
+        $this->assertInstanceOf(
+            'PDOStatement',
+            $resource
+        );
         
-       var_export($resource);
+        print_r($resource->fetch());
+        print_r($resource->fetch());
     }
 }
