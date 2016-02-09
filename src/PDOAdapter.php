@@ -20,6 +20,7 @@ class PDOAdapter implements DatabaseAdapterInterface
     private $dbConnection;
     private $executionStatus;
     private $lastInsertedId;
+    private $resourceHandle;
 
     /**
      * Constructor
@@ -127,20 +128,27 @@ class PDOAdapter implements DatabaseAdapterInterface
         try {
             // start transaction
             $this->dbConnection->beginTransaction();
+            
             // execute the query and return a status
-            var_dump($statement->execute());
+            $this->executionStatus = $statement->execute();
+            
             // finally execute the query
-            $this->executionStatus = $this->dbConnection->commit();
-            var_dump($this->executionStatus);
+            $this->resourceHandle = $this->dbConnection->commit();
+            
             // get last inserted id if present
             $this->lastInsertedId = $this->dbConnection->lastInsertId();
         } catch (\PDOException $ex) {
             // If an error occurs, execute rollback
             $this->dbConnection->rollback();
+            
             // Return execution status to false
             $this->executionStatus = false;
-            //exit();
+            $this->resourceHandle = null;
+            
+            throw new \Exception($ex->getMessage());
         }
+        
+        return $this->resourceHandle;
     }
 
     /**

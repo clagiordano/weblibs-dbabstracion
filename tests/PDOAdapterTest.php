@@ -20,8 +20,8 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
     
     public function testOne()
     {
-        $result = $this->object->query("SELECT * FROM users");
+        $resource = $this->object->query("SELECT * FROM sample");
         
-       var_export($result);
+       var_export($resource);
     }
 }
