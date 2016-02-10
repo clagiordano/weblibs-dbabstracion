@@ -181,9 +181,17 @@ class PDOAdapter implements DatabaseAdapterInterface
      */
     public function select($table, $conditions = '', $fields = '*', $order = '', $limit = null, $offset = null)
     {
-        // TODO: Implement select() method.
-    }
+        $query = 'SELECT ' . $fields . ' FROM ' . $table;
+        $query .= ($conditions) ? ' WHERE ' . $conditions : "";
+        $query .= ($limit) ? ' LIMIT ' . $limit : "";
+        $query .= ($offset && $limit) ? ' OFFSET ' . $offset : "";
+        $query .= ($order) ? ' ORDER BY ' . $order : "";
 
+        $this->query($query);
+
+        return $this->countRows();
+    }
+    
     /**
      * @param $table
      * @param array $data

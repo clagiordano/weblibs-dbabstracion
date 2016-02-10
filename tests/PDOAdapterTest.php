@@ -31,7 +31,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->object->connect();
     }
     
-    public function testOne()
+    public function testQuery()
     {
         $resource = $this->object->query("SELECT * FROM tab_sample");
         $this->assertInstanceOf(
@@ -41,5 +41,15 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         
         print_r($this->object->fetch());
         print_r($this->object->fetch());
+    }
+    
+    public function testSelect()
+    {
+        $resource = $this->object->select("tab_sample");
+        $this->assertInstanceOf(
+            'PDOStatement',
+            $resource
+        );
+        
     }
 }
