@@ -45,10 +45,10 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testSelect()
     {
-        $resource = $this->object->select('tab_sample');
-        $this->assertInstanceOf(
-            'PDOStatement',
-            $resource
+        $affectedRows = $this->object->select('tab_sample');
+        $this->assertInternalType(
+            'integer',
+            $affectedRows
         );
     }
 }

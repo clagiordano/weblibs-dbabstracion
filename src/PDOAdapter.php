@@ -23,24 +23,23 @@ class PDOAdapter implements DatabaseAdapterInterface
     private $resourceHandle;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param  string $dbHost
-     * @param  string $dbUser
-     * @param  string $dbPassword
-     * @param  string $dbName
+     * @param string $dbHost
+     * @param string $dbUser
+     * @param string $dbPassword
+     * @param string $dbName
      * @param string $dbDriver
-     * @param  string $dbCharset
-     *
-     * @param bool $isPersistent
+     * @param string $dbCharset
+     * @param bool   $isPersistent
      */
     public function __construct(
         $dbHost,
         $dbUser,
         $dbPassword,
         $dbName,
-        $dbDriver = "mysql",
-        $dbCharset = "utf8",
+        $dbDriver = 'mysql',
+        $dbCharset = 'utf8',
         $isPersistent = true
     ) {
         $this->dbHostname = $dbHost;
@@ -59,7 +58,9 @@ class PDOAdapter implements DatabaseAdapterInterface
 
     /**
      * @brief Database connection
+     *
      * @return PDO
+     *
      * @throws \Exception
      */
     public function connect()
@@ -77,7 +78,7 @@ class PDOAdapter implements DatabaseAdapterInterface
         } catch (\PDOException $ex) {
             // Error during database connection, check params.
             throw new \InvalidArgumentException(
-                __METHOD__ . ": " . $ex->getMessage()
+                __METHOD__.': '.$ex->getMessage()
             );
         }
 
@@ -86,7 +87,7 @@ class PDOAdapter implements DatabaseAdapterInterface
 
     /**
      * Close automatically the database connection when the instance
-     * of the class is destroyed
+     * of the class is destroyed.
      */
     public function __destruct()
     {
@@ -94,9 +95,9 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
-     * Close explicitly the database connection
+     * Close explicitly the database connection.
      *
-     * @return boolean
+     * @return bool
      */
     public function disconnect()
     {
@@ -110,47 +111,48 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
-     * Execute the specified query
+     * Execute the specified query.
      *
      * @param $queryString
+     *
      * @return mixed
      */
     public function query($queryString)
     {
         if (!is_string($queryString) || empty($queryString)) {
             throw new \InvalidArgumentException(
-                __METHOD__ . ': The specified query is not valid.'
+                __METHOD__.': The specified query is not valid.'
             );
         }
-        
+
         $this->connect();
         $this->resourceHandle = $this->dbConnection->prepare($queryString);
-        
+
         try {
             // start transaction
             $this->dbConnection->beginTransaction();
-            
+
             // execute the query and return a status
             $this->executionStatus = $this->resourceHandle->execute();
-            
+
             // finally execute the query
             $this->dbConnection->commit();
-            
+
             // get last inserted id if present
             $this->lastInsertedId = $this->dbConnection->lastInsertId();
         } catch (\PDOException $ex) {
             // If an error occurs, execute rollback
             $this->dbConnection->rollback();
-            
+
             // Return execution status to false
             $this->executionStatus = false;
             $this->resourceHandle->closeCursor();
-            
+
             throw new \RuntimeException(
-                __METHOD__ . ": {$ex->getMessage()}"
+                __METHOD__.": {$ex->getMessage()}"
             );
         }
-        
+
         return $this->resourceHandle;
     }
 
@@ -163,10 +165,10 @@ class PDOAdapter implements DatabaseAdapterInterface
             if (($row = $this->resourceHandle->fetch(\PDO::FETCH_ASSOC)) === false) {
                 $this->freeResult();
             }
-            
+
             return $row;
         }
-        
+
         return false;
     }
 
@@ -175,26 +177,28 @@ class PDOAdapter implements DatabaseAdapterInterface
      * @param string $conditions
      * @param string $fields
      * @param string $order
-     * @param null $limit
-     * @param null $offset
+     * @param null   $limit
+     * @param null   $offset
+     *
      * @return mixed
      */
     public function select($table, $conditions = '', $fields = '*', $order = '', $limit = null, $offset = null)
     {
-        $query = 'SELECT ' . $fields . ' FROM ' . $table;
-        $query .= ($conditions) ? ' WHERE ' . $conditions : "";
-        $query .= ($limit) ? ' LIMIT ' . $limit : "";
-        $query .= ($offset && $limit) ? ' OFFSET ' . $offset : "";
-        $query .= ($order) ? ' ORDER BY ' . $order : "";
+        $query = 'SELECT '.$fields.' FROM '.$table;
+        $query .= ($conditions) ? ' WHERE '.$conditions : '';
+        $query .= ($limit) ? ' LIMIT '.$limit : '';
+        $query .= ($offset && $limit) ? ' OFFSET '.$offset : '';
+        $query .= ($order) ? ' ORDER BY '.$order : '';
 
         $this->query($query);
 
         return $this->countRows();
     }
-    
+
     /**
      * @param $table
      * @param array $data
+     *
      * @return mixed
      */
     public function insert($table, array $data)
@@ -206,6 +210,7 @@ class PDOAdapter implements DatabaseAdapterInterface
      * @param $table
      * @param array $data
      * @param $conditions
+     *
      * @return mixed
      */
     public function update($table, array $data, $conditions)
@@ -216,6 +221,7 @@ class PDOAdapter implements DatabaseAdapterInterface
     /**
      * @param $table
      * @param $conditions
+     *
      * @return mixed
      */
     public function delete($table, $conditions)
@@ -236,7 +242,13 @@ class PDOAdapter implements DatabaseAdapterInterface
      */
     public function countRows()
     {
-        // TODO: Implement countRows() method.
+        $affectedRows = 0;
+
+        if (!is_null($this->resourceHandle)) {
+            $affectedRows = $this->resourceHandle->rowCount();
+        }
+
+        return $affectedRows;
     }
 
     /**
@@ -246,9 +258,10 @@ class PDOAdapter implements DatabaseAdapterInterface
     {
         // TODO: Implement getAffectedRows() method.
     }
-    
+
     /**
      * @brief
+     *
      * @return
      */
     public function freeResult()
@@ -256,9 +269,9 @@ class PDOAdapter implements DatabaseAdapterInterface
         if ($this->resourceHandle === null) {
             return false;
         }
-        
+
         $this->resourceHandle->closeCursor();
-        
+
         return true;
     }
 }
