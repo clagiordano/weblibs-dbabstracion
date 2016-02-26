@@ -242,13 +242,13 @@ class PDOAdapter implements DatabaseAdapterInterface
      */
     public function countRows()
     {
-        $affectedRows = 0;
+        $countRows = 0;
 
         if (!is_null($this->resourceHandle)) {
-            $affectedRows = $this->resourceHandle->rowCount();
+            $countRows = $this->resourceHandle->rowCount();
         }
 
-        return $affectedRows;
+        return $countRows;
     }
 
     /**
