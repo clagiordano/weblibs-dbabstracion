@@ -45,10 +45,22 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testSelect()
     {
-        $affectedRows = $this->object->select('tab_sample');
+        $countRows = $this->object->select('tab_sample');
         $this->assertInternalType(
             'integer',
-            $affectedRows
+            $countRows
         );
+    }
+
+    public function testSelect2()
+    {
+        $countRows = $this->object->select('tab_sample');
+        $this->assertInternalType(
+            'integer',
+            $countRows
+        );
+
+        $this->assertEquals($countRows, $this->object->countRows());
+        $this->assertEquals($countRows, $this->object->getAffectedRows());
     }
 }

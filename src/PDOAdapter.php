@@ -256,7 +256,13 @@ class PDOAdapter implements DatabaseAdapterInterface
      */
     public function getAffectedRows()
     {
-        // TODO: Implement getAffectedRows() method.
+        $affectedRows = 0;
+
+        if (!is_null($this->resourceHandle)) {
+            $affectedRows = $this->resourceHandle->rowCount();
+        }
+
+        return $affectedRows;
     }
 
     /**
