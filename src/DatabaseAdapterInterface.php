@@ -20,6 +20,7 @@ interface DatabaseAdapterInterface
 
     /**
      * @param $queryString
+     *
      * @return mixed
      */
     public function query($queryString);
@@ -34,8 +35,9 @@ interface DatabaseAdapterInterface
      * @param string $conditions
      * @param string $fields
      * @param string $order
-     * @param null $limit
-     * @param null $offset
+     * @param null   $limit
+     * @param null   $offset
+     *
      * @return mixed
      */
     public function select($table, $conditions = '', $fields = '*', $order = '', $limit = null, $offset = null);
@@ -43,6 +45,7 @@ interface DatabaseAdapterInterface
     /**
      * @param $table
      * @param array $data
+     *
      * @return mixed
      */
     public function insert($table, array $data);
@@ -51,6 +54,7 @@ interface DatabaseAdapterInterface
      * @param $table
      * @param array $data
      * @param $conditions
+     *
      * @return mixed
      */
     public function update($table, array $data, $conditions);
@@ -58,6 +62,7 @@ interface DatabaseAdapterInterface
     /**
      * @param $table
      * @param $conditions
+     *
      * @return mixed
      */
     public function delete($table, $conditions);
