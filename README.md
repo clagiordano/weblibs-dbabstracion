@@ -25,8 +25,8 @@ new Mapper(Adapter, EntityOptionsArray)
 | Doctrine      | dbAbstraction |
 | ------------- | ------------- |
 | Entity        | Entity        |
-|DbLinkedApi    |  Mapper       |
-|Adapter        |      Adapter  |
+| DbLinkedApi   | Mapper        |
+| Adapter       | Adapter       |
 
 ## Legal
 *Copyright (C) 2015 Claudio Giordano <claudio.giordano@autistici.org>*
