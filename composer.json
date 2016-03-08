@@ -29,8 +29,6 @@
     "php": ">=5.4"
   },
   "require-dev": {
-    "php": ">=5.4",
-    "phpunit/phpunit": "5.*",
-    "phpunit/phpunit-skeleton-generator": "*"
+    "phpunit/phpunit": "*"
   }
 }
