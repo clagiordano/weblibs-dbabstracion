@@ -264,11 +264,11 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getInsertId()
     {
-        return $this->lastInsertedId;
+        return (integer)$this->lastInsertedId;
     }
 
     /**

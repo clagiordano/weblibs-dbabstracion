@@ -73,20 +73,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
     {
         $lastId = $this->object->insert("tab_sample", ['text' => 'testInsert']);
 
-        var_dump($lastId);
-
-        //$this->assertInternalType('integer', $lastId);
-        //$this->assertTrue(($lastId > 0));
-
-        /*$db = new \PDO(
-            "mysql:host=localhost;dbname=sample;charset=utf8",
-            "test",
-            "test"
-        );
-
-        $result = $db->exec("INSERT INTO tab_sample (text) VALUES ('testInsert')");
-        var_dump($result);
-        $insertId = $db->lastInsertId();
-        var_dump($insertId);*/
+        $this->assertInternalType('integer', $lastId);
+        $this->assertTrue(($lastId > 0));
     }
 }
