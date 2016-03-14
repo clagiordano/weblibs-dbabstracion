@@ -71,7 +71,13 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testInsert()
     {
-        $lastId = $this->object->insert("tab_sample", ['text' => 'testInsert']);
+        $lastId = $this->object->insert(
+            "tab_sample",
+            [
+                'text' => 'testInsert',
+                'description' => 'test description'
+            ]
+        );
 
         $this->assertInternalType('integer', $lastId);
         $this->assertTrue(($lastId > 0));

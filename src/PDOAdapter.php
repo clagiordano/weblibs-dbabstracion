@@ -135,11 +135,7 @@ class PDOAdapter implements DatabaseAdapterInterface
             $this->dbConnection->beginTransaction();
 
             // execute the query and return a status
-            if (count($queryValues) > 0) {
-                $this->executionStatus = $this->resourceHandle->execute($queryValues);
-            } else {
-                $this->executionStatus = $this->resourceHandle->execute();
-            }
+            $this->executionStatus = $this->resourceHandle->execute($queryValues ?: null);
 
             // get last inserted id if present
             $this->lastInsertedId = $this->dbConnection->lastInsertId();
@@ -232,6 +228,7 @@ class PDOAdapter implements DatabaseAdapterInterface
         $vNumber = 1;
         foreach ($arrayData as $value) {
             $preparedValues[":value{$vNumber}"] = "$value";
+            $vNumber++;
         }
 
         unset($arrayData);
