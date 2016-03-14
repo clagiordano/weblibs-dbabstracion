@@ -4,8 +4,13 @@ namespace clagiordano\weblibs\dbabstraction\tests;
 
 use clagiordano\weblibs\dbabstraction\PDOAdapter;
 
+/**
+ * Class PDOAdapterTest
+ * @package clagiordano\weblibs\dbabstraction\tests
+ */
 class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var PDOAdapter $object */
     private $object;
 
     public function setUp()
@@ -62,5 +67,26 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($countRows, $this->object->countRows());
         $this->assertEquals($countRows, $this->object->getAffectedRows());
+    }
+
+    public function testInsert()
+    {
+        $lastId = $this->object->insert("tab_sample", ['text' => 'testInsert']);
+
+        var_dump($lastId);
+
+        //$this->assertInternalType('integer', $lastId);
+        //$this->assertTrue(($lastId > 0));
+
+        /*$db = new \PDO(
+            "mysql:host=localhost;dbname=sample;charset=utf8",
+            "test",
+            "test"
+        );
+
+        $result = $db->exec("INSERT INTO tab_sample (text) VALUES ('testInsert')");
+        var_dump($result);
+        $insertId = $db->lastInsertId();
+        var_dump($insertId);*/
     }
 }

@@ -17,9 +17,11 @@ class PDOAdapter implements DatabaseAdapterInterface
     private $dbDriver;
     private $dbCharset;
     private $driverOptions;
+    /** @var PDO $dbConnection */
     private $dbConnection;
     private $executionStatus;
     private $lastInsertedId;
+    /** @var \PDOStatement $resourceHandle */
     private $resourceHandle;
 
     /**
@@ -51,8 +53,8 @@ class PDOAdapter implements DatabaseAdapterInterface
         $this->dbCharset = $dbCharset;
 
         $this->driverOptions = [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_PERSISTENT => $isPersistent,
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            \PDO::ATTR_PERSISTENT => $isPersistent
         ];
     }
 
@@ -69,7 +71,7 @@ class PDOAdapter implements DatabaseAdapterInterface
          * Try to connect to database
          */
         try {
-            $this->dbConnection = new PDO(
+            $this->dbConnection = new \PDO(
                 "{$this->dbDriver}:host={$this->dbHostname};dbname={$this->dbName};charset={$this->dbCharset}",
                 "{$this->dbUsername}",
                 "{$this->dbPassword}",
@@ -117,7 +119,7 @@ class PDOAdapter implements DatabaseAdapterInterface
      *
      * @return mixed
      */
-    public function query($queryString)
+    public function query($queryString, array $queryValues = [])
     {
         if (!is_string($queryString) || empty($queryString)) {
             throw new \InvalidArgumentException(
@@ -133,16 +135,20 @@ class PDOAdapter implements DatabaseAdapterInterface
             $this->dbConnection->beginTransaction();
 
             // execute the query and return a status
-            $this->executionStatus = $this->resourceHandle->execute();
-
-            // finally execute the query
-            $this->dbConnection->commit();
+            if (count($queryValues) > 0) {
+                $this->executionStatus = $this->resourceHandle->execute($queryValues);
+            } else {
+                $this->executionStatus = $this->resourceHandle->execute();
+            }
 
             // get last inserted id if present
             $this->lastInsertedId = $this->dbConnection->lastInsertId();
+
+            // finally execute the query
+            $this->dbConnection->commit();
         } catch (\PDOException $ex) {
             // If an error occurs, execute rollback
-            $this->dbConnection->rollback();
+            $this->dbConnection->rollBack();
 
             // Return execution status to false
             $this->executionStatus = false;
@@ -203,7 +209,35 @@ class PDOAdapter implements DatabaseAdapterInterface
      */
     public function insert($table, array $data)
     {
-        // TODO: Implement insert() method.
+        $nameFields = join(',', array_keys($data));
+        $preparedValues = $this->prepareValues($data);
+        $keyValues = join(",", array_keys($preparedValues));
+        $queryString = "INSERT INTO {$table} ({$nameFields}) VALUES ({$keyValues});";
+
+        $this->query($queryString, $preparedValues);
+
+        return $this->getInsertId();
+    }
+
+    /**
+     * @brief
+     * @param array $arrayData
+     * @return string
+     */
+    private function prepareValues($arrayData)
+    {
+        $arrayData = array_values($arrayData);
+
+        $preparedValues = [];
+        $vNumber = 1;
+        foreach ($arrayData as $value) {
+            $preparedValues[":value{$vNumber}"] = "$value";
+        }
+
+        unset($arrayData);
+        unset($vNumber);
+
+        return $preparedValues;
     }
 
     /**
@@ -234,7 +268,7 @@ class PDOAdapter implements DatabaseAdapterInterface
      */
     public function getInsertId()
     {
-        // TODO: Implement getInsertId() method.
+        return $this->lastInsertedId;
     }
 
     /**
@@ -267,8 +301,7 @@ class PDOAdapter implements DatabaseAdapterInterface
 
     /**
      * @brief
-     *
-     * @return
+     * @return bool
      */
     public function freeResult()
     {
@@ -279,5 +312,19 @@ class PDOAdapter implements DatabaseAdapterInterface
         $this->resourceHandle->closeCursor();
 
         return true;
+    }
+
+    /**
+     * Escape the specified value
+     */
+    public function quoteValue($value)
+    {
+        if ($value === null) {
+            $value = 'NULL';
+        } elseif (!is_numeric($value)) {
+            $value = "'{$value}'";
+        }
+
+        return $value;
     }
 }
