@@ -182,24 +182,45 @@ class PDOAdapter implements DatabaseAdapterInterface
     /**
      * Perform a SELECT statement
      *
-     * @param $table
+     * @param string $table
      * @param string $conditions
      * @param string $fields
      * @param string $order
-     * @param null   $limit
-     * @param null   $offset
+     * @param string $limit
+     * @param string $offset
      *
      * @return mixed
      */
-    public function select($table, $conditions = '', $fields = '*', $order = '', $limit = null, $offset = null)
+    public function select(
+        $table,
+        $conditions = null,
+        $fields = "*",
+        $order = null,
+        $limit = null,
+        $offset = null
+    )
     {
-        $query = 'SELECT '.$fields.' FROM '.$table;
-        $query .= ($conditions) ? ' WHERE '.$conditions : '';
-        $query .= ($limit) ? ' LIMIT '.$limit : '';
-        $query .= ($offset && $limit) ? ' OFFSET '.$offset : '';
-        $query .= ($order) ? ' ORDER BY '.$order : '';
+        $queryString = "SELECT {$fields} FROM {$table} ";
 
-        $this->query($query);
+        if (!is_null($conditions)) {
+            $queryString .= "WHERE {$conditions} ";
+        }
+
+        if (!is_null($limit)) {
+            $queryString .= "LIMIT {$limit} ";
+        }
+
+        if (!is_null($offset) && !is_null($limit)) {
+            $queryString .= "OFFSET {$offset} ";
+        }
+
+        if (!is_null($order)) {
+            $queryString .= "ORDER BY {$order} ";
+        }
+
+        $queryString .= ";";
+
+        $this->query($queryString);
 
         return $this->countRows();
     }
@@ -294,6 +315,8 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
+     * Returns the ID of the last inserted row or sequence value
+     *
      * @return integer
      */
     public function getInsertId()
@@ -302,7 +325,9 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
-     * @return mixed
+     * Returns the number of rows affected by the last SQL statement
+     *
+     * @return int the number of rows.
      */
     public function countRows()
     {
@@ -316,7 +341,9 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
-     * @return mixed
+     * Returns the number of rows affected by the last SQL statement
+     *
+     * @return int the number of rows.
      */
     public function getAffectedRows()
     {
@@ -330,8 +357,9 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
-     * @brief
-     * @return bool
+     * Closes the cursor, enabling the statement to be executed again.
+     *
+     * @return bool Returns true on success, false on failure.
      */
     public function freeResult()
     {
@@ -342,19 +370,5 @@ class PDOAdapter implements DatabaseAdapterInterface
         $this->resourceHandle->closeCursor();
 
         return true;
-    }
-
-    /**
-     * Escape the specified value
-     */
-    public function quoteValue($value)
-    {
-        if ($value === null) {
-            $value = 'NULL';
-        } elseif (!is_numeric($value)) {
-            $value = "'{$value}'";
-        }
-
-        return $value;
     }
 }
