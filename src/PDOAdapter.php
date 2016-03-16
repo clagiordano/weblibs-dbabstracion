@@ -5,8 +5,9 @@ namespace clagiordano\weblibs\dbabstraction;
 use PDO;
 
 /**
+ * Database adapter interface for PDO
+ *
  * @class \clagiordano\weblibs\dbabstraction\PDOAdapter
- * @brief
  */
 class PDOAdapter implements DatabaseAdapterInterface
 {
@@ -17,8 +18,9 @@ class PDOAdapter implements DatabaseAdapterInterface
     private $dbDriver;
     private $dbCharset;
     private $driverOptions;
-    /** @var PDO $dbConnection */
+    /** @var \PDO $dbConnection */
     private $dbConnection;
+    /** @var bool $executionStatus */
     private $executionStatus;
     private $lastInsertedId;
     /** @var \PDOStatement $resourceHandle */
@@ -59,7 +61,7 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
-     * @brief Database connection
+     * Connect to a database by using constructor params
      *
      * @return PDO
      *
@@ -113,9 +115,10 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
-     * Execute the specified query.
+     * Execute a query or a prepared statement with a params array values.
      *
-     * @param $queryString
+     * @param string $queryString
+     * @param array $queryValues in format [:placeholder => 'value']
      *
      * @return mixed
      */
@@ -159,6 +162,8 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
+     * Fetches the next row from a result set
+     *
      * @return array|false
      */
     public function fetch()
