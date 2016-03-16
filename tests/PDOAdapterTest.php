@@ -36,6 +36,10 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->object->connect();
     }
 
+    /**
+     * @brief
+     * @return
+     */
     public function testQuery()
     {
         $resource = $this->object->query('SELECT * FROM tab_sample');
@@ -48,6 +52,10 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         print_r($this->object->fetch());
     }
 
+    /**
+     * @brief
+     * @return
+     */
     public function testSelect()
     {
         $countRows = $this->object->select('tab_sample');
@@ -57,6 +65,10 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @brief
+     * @return
+     */
     public function testSelect2()
     {
         $countRows = $this->object->select('tab_sample');
@@ -65,10 +77,15 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
             $countRows
         );
 
+        $this->assertInternalType('integer', $countRows);
         $this->assertEquals($countRows, $this->object->countRows());
         $this->assertEquals($countRows, $this->object->getAffectedRows());
     }
 
+    /**
+     * @brief
+     * @return
+     */
     public function testInsert()
     {
         $lastId = $this->object->insert(
@@ -81,5 +98,41 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInternalType('integer', $lastId);
         $this->assertTrue(($lastId > 0));
+    }
+
+    /**
+     * @brief
+     * @return
+     */
+    public function testUpdate()
+    {
+        $affectedRows = $this->object->update(
+            "tab_sample",
+            [
+                'text' => 'testUpdate',
+                'description' => 'test update description'
+            ],
+            "text = 'testInsert'"
+        );
+
+        $this->assertInternalType('integer', $affectedRows);
+        $this->assertEquals($affectedRows, $this->object->countRows());
+        $this->assertEquals($affectedRows, $this->object->getAffectedRows());
+    }
+
+    /**
+     * @brief
+     * @return
+     */
+    public function testDelete()
+    {
+        $affectedRows = $this->object->delete(
+            "tab_sample",
+            "text = 'testUpdate'"
+        );
+
+        $this->assertInternalType('integer', $affectedRows);
+        $this->assertEquals($affectedRows, $this->object->countRows());
+        $this->assertEquals($affectedRows, $this->object->getAffectedRows());
     }
 }

@@ -175,6 +175,8 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
+     * Perform a SELECT statement
+     *
      * @param $table
      * @param string $conditions
      * @param string $fields
@@ -198,6 +200,8 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
+     * Perform a INSERT statement
+     *
      * @param $table
      * @param array $data
      *
@@ -216,7 +220,8 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
-     * @brief
+     * Preparate values for execute
+     *
      * @param array $arrayData
      * @return string
      */
@@ -238,6 +243,8 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
+     * Perform a UPDATE statement
+     *
      * @param $table
      * @param array $data
      * @param $conditions
@@ -246,10 +253,27 @@ class PDOAdapter implements DatabaseAdapterInterface
      */
     public function update($table, array $data, $conditions)
     {
-        // TODO: Implement update() method.
+        $nameFields = array_keys($data);
+        $preparedValues = $this->prepareValues($data);
+        $queryString = "UPDATE {$table} SET ";
+
+        $fNumber = 0;
+        foreach ($preparedValues as $key => $value) {
+            $queryString .= "{$nameFields[$fNumber]} = {$key}, ";
+            $fNumber++;
+        }
+
+        $queryString = preg_replace('/,\ $/', ' ', $queryString);
+        $queryString .= "WHERE {$conditions};";
+
+        $this->query($queryString, $preparedValues);
+
+        return $this->getAffectedRows();
     }
 
     /**
+     * Perform a DELETE statement
+     *
      * @param $table
      * @param $conditions
      *
@@ -257,7 +281,11 @@ class PDOAdapter implements DatabaseAdapterInterface
      */
     public function delete($table, $conditions)
     {
-        // TODO: Implement delete() method.
+        $queryString = "DELETE FROM {$table} WHERE {$conditions}";
+
+        $this->query($queryString);
+
+        return $this->getAffectedRows();
     }
 
     /**
