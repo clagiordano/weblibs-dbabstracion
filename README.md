@@ -2,6 +2,7 @@
 weblibs-dbabstraction is an Abstraction library for the database and ORM modules.
 
 ## Description of the main components
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/ba8db8b9-1af7-471b-965e-d055f23b6dce/big.png)](https://insight.sensiolabs.com/projects/ba8db8b9-1af7-471b-965e-d055f23b6dce)
 
 ### Entity
 Is an object which expose properties dynamically generated from an array of fields.
