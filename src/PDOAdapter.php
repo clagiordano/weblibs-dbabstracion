@@ -2,7 +2,7 @@
 
 namespace clagiordano\weblibs\dbabstraction;
 
-use PDO;
+use \PDO;
 
 /**
  * Database adapter interface for PDO
@@ -21,7 +21,7 @@ class PDOAdapter implements DatabaseAdapterInterface
     /** @var \PDO $dbConnection */
     private $dbConnection;
     /** @var bool $executionStatus */
-    private $executionStatus;
+    private $executionStatus = false;
     private $lastInsertedId;
     /** @var \PDOStatement $resourceHandle */
     private $resourceHandle;
@@ -374,5 +374,15 @@ class PDOAdapter implements DatabaseAdapterInterface
         $this->resourceHandle->closeCursor();
 
         return true;
+    }
+
+    /**
+     * Returns the query execution status.
+     *
+     * @return bool
+     */
+    public function getExecutionStatus()
+    {
+        return $this->executionStatus;
     }
 }
