@@ -154,7 +154,7 @@ class PDOAdapter implements DatabaseAdapterInterface
             $this->resourceHandle->closeCursor();
 
             throw new \RuntimeException(
-                __METHOD__.": {$ex->getMessage()}"
+                __METHOD__.": {$ex->getMessage()}\nqueryString: {$queryString}"
             );
         }
 
@@ -194,12 +194,16 @@ class PDOAdapter implements DatabaseAdapterInterface
     public function select(
         $table,
         $conditions = null,
-        $fields = "*",
+        $fields = null,
         $order = null,
         $limit = null,
         $offset = null
     )
     {
+        if (is_null($fields)) {
+            $fields = "*";
+        }
+
         $queryString = "SELECT {$fields} FROM {$table} ";
 
         if (!is_null($conditions)) {

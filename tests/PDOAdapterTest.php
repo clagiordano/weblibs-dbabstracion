@@ -48,8 +48,25 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
             $resource
         );
 
-        print_r($this->object->fetch());
-        print_r($this->object->fetch());
+        while (($row = $this->object->fetch()) !== false) {
+            $this->assertInternalType('array', $row);
+        }
+    }
+
+    public function testPreparedStatement()
+    {
+        $resource = $this->object->query(
+            'SELECT * FROM tab_sample WHERE id=:id',
+            [':id' => 1]
+        );
+        $this->assertInstanceOf(
+            'PDOStatement',
+            $resource
+        );
+
+        while (($row = $this->object->fetch()) !== false) {
+            $this->assertInternalType('array', $row);
+        }
     }
 
     /**
@@ -65,11 +82,41 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testInvalidQuery()
+    {
+        $this->setExpectedException('RuntimeException');
+        $countRows = $this->object->query(
+            "SELECT * FROM INVALID_TABLE"
+        );
+
+        $this->assertInternalType(
+            'integer',
+            $countRows
+        );
+
+        $this->assertEquals($countRows, $this->object->countRows());
+        $this->assertEquals($countRows, $this->object->getAffectedRows());
+    }
+
+    public function testNullQuery()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $countRows = $this->object->query(null);
+
+        $this->assertInternalType(
+            'integer',
+            $countRows
+        );
+
+        $this->assertEquals($countRows, $this->object->countRows());
+        $this->assertEquals($countRows, $this->object->getAffectedRows());
+    }
+
     /**
      * @brief
      * @return
      */
-    public function testSelect2()
+    public function testSelectAndDisconnect()
     {
         $countRows = $this->object->select('tab_sample');
         $this->assertInternalType(
@@ -77,9 +124,15 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
             $countRows
         );
 
+        while (($row = $this->object->fetch()) !== false) {
+            $this->assertInternalType('array', $row);
+        }
+
         $this->assertInternalType('integer', $countRows);
         $this->assertEquals($countRows, $this->object->countRows());
         $this->assertEquals($countRows, $this->object->getAffectedRows());
+
+        $this->assertTrue($this->object->disconnect());
     }
 
     /**
@@ -98,6 +151,95 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInternalType('integer', $lastId);
         $this->assertTrue(($lastId > 0));
+    }
+
+    public function testSelectWithWhere()
+    {
+        $countRows = $this->object->select('tab_sample', "text = 'testInsert'");
+        $this->assertInternalType(
+            'integer',
+            $countRows
+        );
+
+        $this->assertInternalType('integer', $countRows);
+        $this->assertEquals($countRows, $this->object->countRows());
+        $this->assertEquals($countRows, $this->object->getAffectedRows());
+        $this->assertTrue($countRows > 0);
+    }
+
+    public function testSelectWithLimit()
+    {
+        $countRows = $this->object->select('tab_sample', null, null, null, 1);
+        $this->assertInternalType(
+            'integer',
+            $countRows
+        );
+
+        $this->assertInternalType('integer', $countRows);
+        $this->assertEquals($countRows, $this->object->countRows());
+        $this->assertEquals($countRows, $this->object->getAffectedRows());
+        $this->assertTrue($countRows > 0);
+    }
+
+    public function testSelectWithOffset()
+    {
+        $countRows = $this->object->select('tab_sample', null, null, null, 1, 1);
+        $this->assertInternalType(
+            'integer',
+            $countRows
+        );
+
+        $this->assertInternalType('integer', $countRows);
+        $this->assertEquals($countRows, $this->object->countRows());
+        $this->assertEquals($countRows, $this->object->getAffectedRows());
+        $this->assertTrue($countRows > 0);
+    }
+
+    public function testSelectWithOrder()
+    {
+        $countRows = $this->object->select('tab_sample', null, "*", "id");
+        $this->assertInternalType(
+            'integer',
+            $countRows
+        );
+
+        $this->assertInternalType('integer', $countRows);
+        $this->assertEquals($countRows, $this->object->countRows());
+        $this->assertEquals($countRows, $this->object->getAffectedRows());
+    }
+
+    public function testFetchAll()
+    {
+        $countRows = $this->object->select('tab_sample', null, null, null, 1, 1);
+        $this->assertInternalType(
+            'integer',
+            $countRows
+        );
+
+        while (($row = $this->object->fetch()) !== false) {
+            $this->assertInternalType('array', $row);
+        }
+
+        $this->assertInternalType('integer', $countRows);
+        $this->assertEquals($countRows, $this->object->countRows());
+        $this->assertEquals($countRows, $this->object->getAffectedRows());
+        $this->assertTrue($countRows > 0);
+    }
+
+    public function testFetchWithoutResultset()
+    {
+        $this->assertFalse($this->object->fetch());
+
+        $this->assertEquals(0, $this->object->countRows());
+        $this->assertEquals(0, $this->object->getAffectedRows());
+    }
+
+    public function testFreeResultWithoutResultset()
+    {
+        $this->assertFalse($this->object->freeResult());
+
+        $this->assertEquals(0, $this->object->countRows());
+        $this->assertEquals(0, $this->object->getAffectedRows());
     }
 
     /**
