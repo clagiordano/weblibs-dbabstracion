@@ -8,6 +8,7 @@
  <property name="phploc"  value="phploc"/>
  <property name="phpmd"   value="phpmd"/>
  <property name="phpunit" value="phpunit"/>
+ <property name="phpmetrics" value="phpmetrics"/>
 
  <!-- Use this when the tools are located as PHARs in ${basedir}/build/tools
  <property name="pdepend" value="${basedir}/build/tools/pdepend.phar"/>
@@ -28,11 +29,11 @@
  <property name="phpunit" value="${basedir}/vendor/bin/phpunit"/> -->
 
  <target name="full-build"
-         depends="prepare,static-analysis,phpunit,phpdox,-check-failure"
+         depends="prepare,static-analysis,phpunit,phpdox,phpmetrics,-check-failure"
          description="Performs static analysis, runs the tests, and generates project documentation"/>
 
  <target name="full-build-parallel"
-         depends="prepare,static-analysis-parallel,phpunit,phpdox,-check-failure"
+         depends="prepare,static-analysis-parallel,phpunit,phpdox,phpmetrics,-check-failure"
          description="Performs static analysis (executing the tools in parallel), runs the tests, and generates project documentation"/>
 
  <target name="quick-build"
@@ -40,7 +41,7 @@
          description="Performs a lint check and runs the tests (without generating code coverage reports)"/>
 
  <target name="static-analysis"
-         depends="lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci"
+         depends="lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpmetrics"
          description="Performs static analysis" />
 
  <!-- Adjust the threadCount attribute's value to the number of CPUs -->
@@ -55,6 +56,7 @@
    <antcall target="phpcpd-ci"/>
    <antcall target="phpcs-ci"/>
    <antcall target="phploc-ci"/>
+   <antcall target="phpmetrics"/>
   </parallel>
  </target>
 
@@ -261,6 +263,20 @@
   <exec executable="${phpdox}" dir="${basedir}/build" taskname="phpdox"/>
 
   <property name="phpdox.done" value="true"/>
+ </target>
+
+ <target name="phpmetrics"
+         unless="phpmetrics.done"
+         depends="phploc-ci,phpcs-ci,phpmd-ci"
+         description="Generate project metrics using phpmetrics">
+  <exec executable="${phpmetrics}" dir="${basedir}/build" taskname="phpmetrics" >
+    <arg value="-q"/>
+    <arg value="--report-html"/>
+    <arg path="${basedir}/build/metrics.html"/>
+    <arg path="${basedir}/src/"/>
+  </exec>
+
+  <property name="phpmetrics.done" value="true"/>
  </target>
 
  <target name="-check-failure">

@@ -289,6 +289,7 @@ class PDOAdapter implements DatabaseAdapterInterface
 
         $fNumber = 0;
         foreach ($preparedValues as $key => $value) {
+            unset($value);
             $queryString .= "{$nameFields[$fNumber]} = {$key}, ";
             $fNumber++;
         }
@@ -377,11 +378,11 @@ class PDOAdapter implements DatabaseAdapterInterface
     }
 
     /**
-     * Returns the query execution status.
+     * Returns the last query execution status.
      *
-     * @return bool
+     * @return bool last execution status
      */
-    public function getExecutionStatus()
+    public function hasExecutionStatus()
     {
         return $this->executionStatus;
     }

@@ -39,7 +39,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('InvalidArgumentException');
         $this->object->connect();
 
-        $this->assertFalse($this->object->getExecutionStatus());
+        $this->assertFalse($this->object->hasExecutionStatus());
     }
 
     /**
@@ -58,7 +58,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
             $this->assertInternalType('array', $row);
         }
 
-        $this->assertTrue($this->object->getExecutionStatus());
+        $this->assertTrue($this->object->hasExecutionStatus());
     }
 
     public function testPreparedStatement()
@@ -76,7 +76,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
             $this->assertInternalType('array', $row);
         }
 
-        $this->assertTrue($this->object->getExecutionStatus());
+        $this->assertTrue($this->object->hasExecutionStatus());
     }
 
     /**
@@ -91,7 +91,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
             $countRows
         );
 
-        $this->assertTrue($this->object->getExecutionStatus());
+        $this->assertTrue($this->object->hasExecutionStatus());
     }
 
     public function testInvalidQuery()
@@ -108,7 +108,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($countRows, $this->object->countRows());
         $this->assertEquals($countRows, $this->object->getAffectedRows());
-        $this->assertFalse($this->object->getExecutionStatus());
+        $this->assertFalse($this->object->hasExecutionStatus());
     }
 
     public function testNullQuery()
@@ -123,7 +123,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($countRows, $this->object->countRows());
         $this->assertEquals($countRows, $this->object->getAffectedRows());
-        $this->assertFalse($this->object->getExecutionStatus());
+        $this->assertFalse($this->object->hasExecutionStatus());
     }
 
     /**
@@ -147,7 +147,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($countRows, $this->object->getAffectedRows());
 
         $this->assertTrue($this->object->disconnect());
-        $this->assertTrue($this->object->getExecutionStatus());
+        $this->assertTrue($this->object->hasExecutionStatus());
     }
 
     /**
@@ -166,7 +166,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInternalType('integer', $lastId);
         $this->assertTrue(($lastId > 0));
-        $this->assertTrue($this->object->getExecutionStatus());
+        $this->assertTrue($this->object->hasExecutionStatus());
     }
 
     public function testSelectWithWhere()
@@ -181,7 +181,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($countRows, $this->object->countRows());
         $this->assertEquals($countRows, $this->object->getAffectedRows());
         $this->assertTrue($countRows > 0);
-        $this->assertTrue($this->object->getExecutionStatus());
+        $this->assertTrue($this->object->hasExecutionStatus());
     }
 
     public function testSelectWithLimit()
@@ -196,7 +196,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($countRows, $this->object->countRows());
         $this->assertEquals($countRows, $this->object->getAffectedRows());
         $this->assertTrue($countRows > 0);
-        $this->assertTrue($this->object->getExecutionStatus());
+        $this->assertTrue($this->object->hasExecutionStatus());
     }
 
     public function testSelectWithOffset()
@@ -211,7 +211,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($countRows, $this->object->countRows());
         $this->assertEquals($countRows, $this->object->getAffectedRows());
         $this->assertTrue($countRows > 0);
-        $this->assertTrue($this->object->getExecutionStatus());
+        $this->assertTrue($this->object->hasExecutionStatus());
     }
 
     public function testSelectWithOrder()
@@ -225,7 +225,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('integer', $countRows);
         $this->assertEquals($countRows, $this->object->countRows());
         $this->assertEquals($countRows, $this->object->getAffectedRows());
-        $this->assertTrue($this->object->getExecutionStatus());
+        $this->assertTrue($this->object->hasExecutionStatus());
     }
 
     public function testFetchAll()
@@ -244,7 +244,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($countRows, $this->object->countRows());
         $this->assertEquals($countRows, $this->object->getAffectedRows());
         $this->assertTrue($countRows > 0);
-        $this->assertTrue($this->object->getExecutionStatus());
+        $this->assertTrue($this->object->hasExecutionStatus());
     }
 
     public function testFetchWithoutResultset()
@@ -253,7 +253,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, $this->object->countRows());
         $this->assertEquals(0, $this->object->getAffectedRows());
-        $this->assertFalse($this->object->getExecutionStatus());
+        $this->assertFalse($this->object->hasExecutionStatus());
     }
 
     public function testFreeResultWithoutResultset()
@@ -262,7 +262,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, $this->object->countRows());
         $this->assertEquals(0, $this->object->getAffectedRows());
-        $this->assertFalse($this->object->getExecutionStatus());
+        $this->assertFalse($this->object->hasExecutionStatus());
     }
 
     /**
@@ -283,7 +283,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('integer', $affectedRows);
         $this->assertEquals($affectedRows, $this->object->countRows());
         $this->assertEquals($affectedRows, $this->object->getAffectedRows());
-        $this->assertTrue($this->object->getExecutionStatus());
+        $this->assertTrue($this->object->hasExecutionStatus());
     }
 
     /**
@@ -300,6 +300,6 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('integer', $affectedRows);
         $this->assertEquals($affectedRows, $this->object->countRows());
         $this->assertEquals($affectedRows, $this->object->getAffectedRows());
-        $this->assertTrue($this->object->getExecutionStatus());
+        $this->assertTrue($this->object->hasExecutionStatus());
     }
 }
