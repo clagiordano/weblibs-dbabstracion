@@ -67,7 +67,25 @@ protected $entityTable = 'sample_table';
 protected $entityClass = 'SampleEntity';
 ```
 
-### Mapper class example
+therefore must be implements the abstract method **createEntity** for the correct mapping between table fields and the desidered entity properties:
+```php
+protected function createEntity(array $fields)
+{
+    return new SampleEntity(
+        [
+            'id' => $fields['id'],
+            'code' => $fields['code'],
+            'brand' => $fields['brand'],
+            'model' => $fields['model'],
+            'description' => $fields['description']
+        ]
+    );
+}
+```
+
+You can also define additional methods if necessary or override existing ones such as insert, update, delete etc to modify its behavior.
+
+### Mapper usage
 TODO
 
 ## Legal
