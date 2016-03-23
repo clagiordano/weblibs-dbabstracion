@@ -131,11 +131,11 @@ abstract class AbstractMapper implements MapperInterface
      * (all entities will be fetched if no criteria are specified)
      *
      * @param string $conditions
-     * @return array|CollectionEntityCollection|mixed
+     * @return array
      */
     public function find($conditions = '')
     {
-        $collection = new \CollectionEntityCollection;
+        $collection = [];
         $this->adapter->select($this->entityTable, $conditions);
 
         if (($data = $this->adapter->fetch()) !== false) {
@@ -147,7 +147,7 @@ abstract class AbstractMapper implements MapperInterface
 
     /**
      * Insert a new entity in the storage
-     * @param $entity
+     * @param AbstractEntity $entity
      * @return mixed
      */
     public function insert($entity)
@@ -162,7 +162,7 @@ abstract class AbstractMapper implements MapperInterface
 
     /**
      * Update an existing entity in the storage
-     * @param $entity
+     * @param AbstractEntity $entity
      * @return mixed
      */
     public function update($entity)
