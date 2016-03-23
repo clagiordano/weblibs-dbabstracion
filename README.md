@@ -1,4 +1,4 @@
-# weblibs-dbabstraction
+﻿# weblibs-dbabstraction
 weblibs-dbabstraction is an Abstraction library for the database and ORM modules.
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/ba8db8b9-1af7-471b-965e-d055f23b6dce/big.png)](https://insight.sensiolabs.com/projects/ba8db8b9-1af7-471b-965e-d055f23b6dce)
@@ -24,6 +24,17 @@ new PDOAdapter(
 
 See PDOAdapterTest class (phpunit test class) for full sample usage into tests folder.
 
+### Entity description
+An entity is an object which expose properties dynamically generated from an array of fields.
+It is a simple class wich has defined the magic methods (__set, __get ... ).
+The entity is automatically used by the mapper class for operations and can be used to gets and sets its public properties.
+
+### Entity usage
+```php
+$entityClass->property = "value";
+echo $entityClass->property;
+```
+
 ### Mapper description
 Is a glue between Entity and Adapter objects which expose high level method to use and persists data.
 A mapper class must be extends the AbstractMapper:
@@ -45,13 +56,7 @@ protected $entityClass = 'SampleEntity';
 ### Mapper class example
 
 
-### Entity description
-An entity is an object which expose properties dynamically generated from an array of fields.
 
-### Entity usage
-```php
-new Entity($fieldsArray);
-```
 
 
 ## Doctrine vs dbabstraction structure simple component comparision
