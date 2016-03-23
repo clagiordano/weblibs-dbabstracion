@@ -212,6 +212,7 @@
          unless="phpcpd.done"
          description="Find duplicate code using PHPCPD and print human readable output. Intended for usage on the command line before committing.">
   <exec executable="${phpcpd}" taskname="phpcpd">
+   <arg value="--fuzzy" />
    <arg path="${basedir}/src" />
   </exec>
 
@@ -269,11 +270,11 @@
          unless="phpmetrics.done"
          depends="phploc-ci,phpcs-ci,phpmd-ci"
          description="Generate project metrics using phpmetrics">
-  <exec executable="${phpmetrics}" dir="${basedir}/build" taskname="phpmetrics" >
+  <exec executable="${phpmetrics}" dir="${basedir}" taskname="phpmetrics" >
     <arg value="-q"/>
     <arg value="--report-html"/>
-    <arg path="${basedir}/build/metrics.html"/>
-    <arg path="${basedir}/src/"/>
+    <arg value="build/metrics.html"/>
+    <arg value="src/"/>
   </exec>
 
   <property name="phpmetrics.done" value="true"/>
