@@ -5,12 +5,11 @@ weblibs-dbabstraction is an Abstraction library for the database and ORM modules
 
 ## Description of the main components
 
-
-### Adapter
+### Adapter description
 Is a persistence layer which interact with database or other backends.
 The default adapter is PDOAdapter wich simplify the access to PDO object and related methods.
 
-#### Usage
+### Adapter usage
 ```php
 new PDOAdapter(
     $dbHost,
@@ -25,19 +24,35 @@ new PDOAdapter(
 
 See PDOAdapterTest class (phpunit test class) for full sample usage into tests folder.
 
+### Mapper description
+Is a glue between Entity and Adapter objects which expose high level method to use and persists data.
+A mapper class must be extends the AbstractMapper:
+```php
+/**
+ * Class SampleMapper
+ */
+class SampleMapper extends AbstractMapper
+{
+```
 
-### Entity
+then must be declare two protected properties to connect database table for persistence 
+and the related entity class:
+```php
+protected $entityTable = 'tab_products';
+protected $entityClass = 'SampleEntity';
+```
+
+### Mapper class example
+
+
+### Entity description
 An entity is an object which expose properties dynamically generated from an array of fields.
+
+### Entity usage
 ```php
 new Entity($fieldsArray);
 ```
 
-
-### Mapper
-Is a glue between Entity and Adapter objects which expose high level method to use and persist data.
-```php
-new Mapper(Adapter, EntityOptionsArray)
-```
 
 ## Doctrine vs dbabstraction structure simple component comparision
 | Doctrine      | dbAbstraction |
