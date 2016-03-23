@@ -11,20 +11,20 @@ use \PDO;
  */
 class PDOAdapter implements DatabaseAdapterInterface
 {
-    private $dbHostname;
-    private $dbUsername;
-    private $dbPassword;
-    private $dbName;
-    private $dbDriver;
-    private $dbCharset;
-    private $driverOptions;
+    protected $dbHostname;
+    protected $dbUsername;
+    protected $dbPassword;
+    protected $dbName;
+    protected $dbDriver;
+    protected $dbCharset;
+    protected $driverOptions;
     /** @var \PDO $dbConnection */
-    private $dbConnection;
+    protected $dbConnection;
     /** @var bool $executionStatus */
-    private $executionStatus = false;
-    private $lastInsertedId;
+    protected $executionStatus = false;
+    protected $lastInsertedId;
     /** @var \PDOStatement $resourceHandle */
-    private $resourceHandle;
+    protected $resourceHandle;
 
     /**
      * Constructor.
