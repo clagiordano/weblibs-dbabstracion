@@ -17,7 +17,8 @@
   "autoload": {
     "psr-4": {
       "clagiordano\\weblibs\\dbabstraction\\": "src/",
-      "clagiordano\\weblibs\\dbabstraction\\tests\\": "tests/"
+      "clagiordano\\weblibs\\dbabstraction\\tests\\": "tests/",
+      "clagiordano\\weblibs\\dbabstraction\\testdata\\": "testdata/"
     }
   },
   "autoload-dev": {

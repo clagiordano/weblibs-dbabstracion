@@ -6,3 +6,5 @@ CREATE TABLE `tab_products` (
   `description` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='latin1_swedish_ci'
+
+INSERT INTO `tab_products` set brand='brand', code='code', model='model', description='description';
