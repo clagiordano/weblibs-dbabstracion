@@ -10,7 +10,7 @@ use clagiordano\weblibs\dbabstraction\AbstractMapper;
 class SampleMapper extends AbstractMapper
 {
     protected $entityTable = 'tab_products';
-    protected $entityClass = 'SampleEntity';
+    protected $entityClass = 'clagiordano\weblibs\dbabstraction\testdata\SampleEntity';
 
     /**
      * Sample insert method
@@ -40,7 +40,7 @@ class SampleMapper extends AbstractMapper
     public function delete($id, $column = 'id')
     {
         if ($id instanceof SampleEntity) {
-            $id = $id­>id;
+            $id = $id->id;
         }
 
         return $this->adapter->delete($this->entityTable, "{$column} = {$id}");

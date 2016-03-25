@@ -9,5 +9,5 @@ use clagiordano\weblibs\dbabstraction\AbstractEntity;
  */
 class SampleEntity extends AbstractEntity
 {
-
+    protected $allowedFields = ['id', 'code', 'brand', 'model', 'description'];
 }

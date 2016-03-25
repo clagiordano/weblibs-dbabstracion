@@ -133,7 +133,7 @@ abstract class AbstractMapper implements MapperInterface
      * @param string $conditions
      * @return array
      */
-    public function find($conditions = '')
+    public function find($conditions = 'TRUE')
     {
         $collection = [];
         $this->adapter->select($this->entityTable, $conditions);
