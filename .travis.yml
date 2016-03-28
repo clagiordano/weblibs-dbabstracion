@@ -14,7 +14,4 @@ before_script:
   - composer install --prefer-dist --no-interaction --no-progress
 
 script:
-  - make test
-
-after_script:
-  - make build
+  ant
