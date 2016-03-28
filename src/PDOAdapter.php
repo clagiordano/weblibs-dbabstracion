@@ -69,12 +69,14 @@ class PDOAdapter implements DatabaseAdapterInterface
      */
     public function connect()
     {
+        $dsnString = "{$this->dbDriver}:host={$this->dbHostname};dbname={$this->dbName};";
+        $dsnString .= "charset={$this->dbCharset}";
         /*
          * Try to connect to database
          */
         try {
             $this->dbConnection = new \PDO(
-                "{$this->dbDriver}:host={$this->dbHostname};dbname={$this->dbName};charset={$this->dbCharset}",
+                $dsnString,
                 "{$this->dbUsername}",
                 "{$this->dbPassword}",
                 $this->driverOptions
@@ -189,7 +191,7 @@ class PDOAdapter implements DatabaseAdapterInterface
      * @param string $limit
      * @param string $offset
      *
-     * @return mixed
+     * @return int number of affected rows
      */
     public function select(
         $table,
@@ -232,10 +234,10 @@ class PDOAdapter implements DatabaseAdapterInterface
     /**
      * Perform a INSERT statement
      *
-     * @param $table
+     * @param string $table
      * @param array $data
      *
-     * @return mixed
+     * @return int last inserted id
      */
     public function insert($table, array $data)
     {
@@ -275,11 +277,11 @@ class PDOAdapter implements DatabaseAdapterInterface
     /**
      * Perform a UPDATE statement
      *
-     * @param $table
+     * @param string $table
      * @param array $data
-     * @param $conditions
+     * @param string $conditions
      *
-     * @return mixed
+     * @return int number of affected rows
      */
     public function update($table, array $data, $conditions)
     {
@@ -305,10 +307,10 @@ class PDOAdapter implements DatabaseAdapterInterface
     /**
      * Perform a DELETE statement
      *
-     * @param $table
-     * @param $conditions
+     * @param string $table
+     * @param string $conditions
      *
-     * @return mixed
+     * @return int number of affected rows
      */
     public function delete($table, $conditions)
     {
@@ -322,7 +324,7 @@ class PDOAdapter implements DatabaseAdapterInterface
     /**
      * Returns the ID of the last inserted row or sequence value
      *
-     * @return integer
+     * @return int 
      */
     public function getInsertId()
     {
