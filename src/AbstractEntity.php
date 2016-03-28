@@ -6,6 +6,7 @@ use InvalidArgumentException;
 
 /**
  * Class AbstractEntity
+ *
  * @package clagiordano\weblibs\dbabstraction
  */
 abstract class AbstractEntity

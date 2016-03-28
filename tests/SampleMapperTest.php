@@ -29,6 +29,10 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->class = new SampleMapper($this->adapter);
+        $this->assertInstanceOf(
+            'clagiordano\weblibs\dbabstraction\testdata\SampleMapper',
+            $this->class
+        );
     }
 
     /**
@@ -127,6 +131,19 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             $oldTableName,
             $this->class->getEntityTable()
+        );
+    }
+
+    public function testFullConstructro()
+    {
+        $mapperOptions = [
+            'entityTable' => 'tab_products',
+            'entityClass' => '\clagiordano\weblibs\dbabstraction\testdata\SampleEntity'
+        ];
+
+        $this->class = new SampleMapper(
+            $this->adapter,
+            $mapperOptions
         );
     }
 }

@@ -7,7 +7,7 @@ use \PDO;
 /**
  * Database adapter interface for PDO
  *
- * @class \clagiordano\weblibs\dbabstraction\PDOAdapter
+ * @package clagiordano\weblibs\dbabstraction
  */
 class PDOAdapter implements DatabaseAdapterInterface
 {

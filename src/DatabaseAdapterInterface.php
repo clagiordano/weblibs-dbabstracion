@@ -3,8 +3,9 @@
 namespace clagiordano\weblibs\dbabstraction;
 
 /**
- * @class \clagiordano\weblibs\dbabstraction\DatabaseAdapterInterface
- * @brief
+ * Interface DatabaseAdapterInterface
+ *
+ * @package clagiordano\weblibs\dbabstraction
  */
 interface DatabaseAdapterInterface
 {

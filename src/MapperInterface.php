@@ -3,8 +3,9 @@
 namespace clagiordano\weblibs\dbabstraction;
 
 /**
- * @class \clagiordano\weblibs\dbabstraction\MapperInterface
- * @brief
+ * Interface MapperInterface
+ *
+ * @package clagiordano\weblibs\dbabstraction
  */
 interface MapperInterface
 {

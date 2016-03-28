@@ -6,6 +6,8 @@ use clagiordano\weblibs\dbabstraction\AbstractMapper;
 
 /**
  * Class SampleMapper
+ *
+ * @package clagiordano\weblibs\dbabstraction\testdata
  */
 class SampleMapper extends AbstractMapper
 {

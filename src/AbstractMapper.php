@@ -5,8 +5,9 @@ namespace clagiordano\weblibs\dbabstraction;
 use InvalidArgumentException;
 
 /**
- * @class \clagiordano\weblibs\dbabstraction\AbstractMapper
- * @brief
+ * Class AbstractMapper
+ *
+ * @package clagiordano\weblibs\dbabstraction
  */
 abstract class AbstractMapper implements MapperInterface
 {
@@ -22,12 +23,13 @@ abstract class AbstractMapper implements MapperInterface
     public function __construct(DatabaseAdapterInterface $adapter, array $entityOptions = [])
     {
         $this->adapter = $adapter;
-        // set the entity table is the option has been specified
+
+        // set the entity table if the option has been specified
         if (isset($entityOptions['entityTable'])) {
             $this->setEntityTable($entityOptions['entityTable']);
         }
 
-        // set the entity class is the option has been specified
+        // set the entity class if the option has been specified
         if (isset($entityOptions['entityClass'])) {
             $this->setEntityClass($entityOptions['entityClass']);
         }
@@ -74,7 +76,7 @@ abstract class AbstractMapper implements MapperInterface
     public function setEntityTable($entityTable)
     {
         if (!is_string($entityTable) || empty($entityTable)) {
-            throw new InvalidArgumentException('The entity table is invalid.');
+            throw new \InvalidArgumentException('The entity table is invalid.');
         }
         $this->entityTable = $entityTable;
 
@@ -100,8 +102,8 @@ abstract class AbstractMapper implements MapperInterface
      */
     public function setEntityClass($entityClass)
     {
-        if (!is_subclass_of($entityClass, 'BlogModelAbstractEntity')) {
-            throw new InvalidArgumentException('The entity class is invalid.');
+        if (!is_subclass_of($entityClass, 'clagiordano\weblibs\dbabstraction\AbstractEntity')) {
+            throw new \InvalidArgumentException('The entity class is invalid.');
         }
 
         $this->entityClass = $entityClass;
@@ -160,10 +162,11 @@ abstract class AbstractMapper implements MapperInterface
     public function insert($entity)
     {
         if (!$entity instanceof $this->entityClass) {
-            throw new InvalidArgumentException(
-                'The entity to be inserted must be an instance of ' . $this->entityClass . '.'
+            throw new \InvalidArgumentException(
+                "The entity to be inserted must be an instance of {$this->entityClass}."
             );
         }
+
         return $this->adapter->insert($this->entityTable, $entity->toArray());
     }
 
@@ -175,14 +178,15 @@ abstract class AbstractMapper implements MapperInterface
     public function update($entity)
     {
         if (!$entity instanceof $this->entityClass) {
-            throw new InvalidArgumentException(
-                'The entity to be updated must be an instance of ' . $this->entityClass . '.'
+            throw new \InvalidArgumentException(
+                "The entity to be updated must be an instance of {$this->entityClass}."
             );
         }
 
         $entityId = $entity->id;
         $data = $entity->toArray();
         unset($data['entityId']);
+
         return $this->adapter->update($this->entityTable, $data, "entityId = $entityId");
     }
 
@@ -197,6 +201,7 @@ abstract class AbstractMapper implements MapperInterface
         if ($entityId instanceof $this->entityClass) {
             $entityId = $entityId->id;
         }
+
         return $this->adapter->delete($this->entityTable, "$col = $entityId");
     }
 }
