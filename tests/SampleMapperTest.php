@@ -94,4 +94,39 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
             $entity2
         );
     }
+
+    public function testSetInvalidEntityTable()
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('The entity table is invalid.');
+        $this->class->setEntityTable(null);
+    }
+
+    public function testSetInvalidEntityTable2()
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('The entity table is invalid.');
+        $this->class->setEntityTable("");
+    }
+
+    public function testSetEntityTable()
+    {
+        $oldTableName = $this->class->getEntityTable();
+        $this->assertInternalType('string', $oldTableName);
+
+        $newTableName = uniqid("tab_");
+        $this->class->setEntityTable($newTableName);
+
+        $this->assertEquals(
+            $newTableName,
+            $this->class->getEntityTable()
+        );
+
+        // Reset previous table name
+        $this->class->setEntityTable($oldTableName);
+        $this->assertEquals(
+            $oldTableName,
+            $this->class->getEntityTable()
+        );
+    }
 }

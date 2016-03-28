@@ -324,7 +324,7 @@ class PDOAdapter implements DatabaseAdapterInterface
     /**
      * Returns the ID of the last inserted row or sequence value
      *
-     * @return int 
+     * @return int
      */
     public function getInsertId()
     {

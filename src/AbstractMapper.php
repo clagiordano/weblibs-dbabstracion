@@ -67,7 +67,8 @@ abstract class AbstractMapper implements MapperInterface
 
     /**
      * Set the entity table
-     * @param $entityTable
+     *
+     * @param string $entityTable
      * @return $this
      */
     public function setEntityTable($entityTable)
@@ -82,6 +83,8 @@ abstract class AbstractMapper implements MapperInterface
 
     /**
      * Get the entity class
+     *
+     * @return string
      */
     public function getEntityClass()
     {
@@ -90,7 +93,9 @@ abstract class AbstractMapper implements MapperInterface
 
     /**
      * Set the entity class
-     * @param $entityClass
+     *
+     * @param string $entityClass
+     *
      * @return $this
      */
     public function setEntityClass($entityClass)
@@ -98,7 +103,9 @@ abstract class AbstractMapper implements MapperInterface
         if (!is_subclass_of($entityClass, 'BlogModelAbstractEntity')) {
             throw new InvalidArgumentException('The entity class is invalid.');
         }
+
         $this->entityClass = $entityClass;
+
         return $this;
     }
 
