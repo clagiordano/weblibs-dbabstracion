@@ -1,7 +1,10 @@
 ﻿# weblibs-dbabstraction
-weblibs-dbabstraction is an Abstraction library for the database and ORM modules.
+weblibs-dbabstraction is an simple and lightweight Abstraction library for the database and ORM modules.
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/ba8db8b9-1af7-471b-965e-d055f23b6dce/big.png)](https://insight.sensiolabs.com/projects/ba8db8b9-1af7-471b-965e-d055f23b6dce)
+
+## Why use weblibs-dbabstraction ?
+The purpose of this project is to propose a simple and lightweight alternative solution instead of more big and complex projects such as Doctrine.
 
 ## Description of the main components
 
