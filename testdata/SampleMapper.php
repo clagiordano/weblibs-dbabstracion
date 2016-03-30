@@ -50,6 +50,7 @@ class SampleMapper extends AbstractMapper
 
     /**
      * Create a SampleEntity entity with the supplied data
+     *
      * @param array $fields
      * @return SampleEntity
      */
