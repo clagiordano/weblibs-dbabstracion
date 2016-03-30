@@ -86,7 +86,28 @@ protected function createEntity(array $fields)
 You can also define additional methods if necessary or override existing ones such as insert, update, delete etc to modify its behavior.
 
 ### Mapper usage
-TODO
+To improve control and security AbstractMapper's methods can be overrided:
+```php
+/**
+ * Sample overrided insert method
+ *
+ * @param SampleEntity $entity
+ * @return mixed
+ */
+public function insert($entity)
+{
+    if (!$entity instanceof SampleEntity) {
+        throw new \InvalidArgumentException(
+            __METHOD__ . ": Invalid entity type."
+        );
+    }
+
+    return $this->adapter->insert($this->entityTable, $entity->toArray());
+}
+```
+
+As you can see, this overrided method require explicitly an instance of SampleEntity to works,
+the same way you can run a validation or additional arguments formatting/sanitizing or whatever you want.
 
 ## Legal
 *Copyright (C) 2015 Claudio Giordano <claudio.giordano@autistici.org>*
