@@ -191,4 +191,9 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
         $this->expectException('InvalidArgumentException');
         $this->class->setEntityClass('InvalidClass');
     }
+
+    public function testInsert()
+    {
+
+    }
 }

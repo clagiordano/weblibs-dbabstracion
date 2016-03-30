@@ -68,6 +68,7 @@
   <delete dir="${basedir}/build/logs"/>
   <delete dir="${basedir}/build/pdepend"/>
   <delete dir="${basedir}/build/phpdox"/>
+  <delete file="${basedir}/build/metrics.html"/>
   <delete dir="${basedir}/vendor"/>
   <property name="clean.done" value="true"/>
  </target>
@@ -271,10 +272,10 @@
          depends="phploc-ci,phpcs-ci,phpmd-ci"
          description="Generate project metrics using phpmetrics">
   <exec executable="${phpmetrics}" dir="${basedir}" taskname="phpmetrics" >
-    <arg value="-q"/>
+    <arg value="--offline"/>
     <arg value="--report-html"/>
     <arg value="build/metrics.html"/>
-    <arg value="src/"/>
+    <arg value="."/>
   </exec>
 
   <property name="phpmetrics.done" value="true"/>
