@@ -11,8 +11,8 @@ use clagiordano\weblibs\dbabstraction\testdata\SampleMapper;
  */
 class SampleMapperTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var SampleMapper $class */
-    private $class = null;
+    /** @var SampleMapper $mapper */
+    private $mapper = null;
     /** @var PDOAdapter $adapter */
     private $adapter = null;
 
@@ -33,14 +33,14 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
             'entityClass' => '\clagiordano\weblibs\dbabstraction\testdata\SampleEntity'
         ];
 
-        $this->class = new SampleMapper(
+        $this->mapper = new SampleMapper(
             $this->adapter,
             $mapperOptions
         );
 
         $this->assertInstanceOf(
             'clagiordano\weblibs\dbabstraction\testdata\SampleMapper',
-            $this->class
+            $this->mapper
         );
     }
 
@@ -51,7 +51,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             $this->adapter,
-            $this->class->getAdapter()
+            $this->mapper->getAdapter()
         );
     }
 
@@ -60,7 +60,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetEntityClass()
     {
-        $className = $this->class->getEntityClass();
+        $className = $this->mapper->getEntityClass();
         $this->assertInternalType('string', $className);
         $this->assertTrue(class_exists($className));
     }
@@ -70,17 +70,17 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetEntityTable()
     {
-        $tableName = $this->class->getEntityTable();
+        $tableName = $this->mapper->getEntityTable();
         $this->assertInternalType('string', $tableName);
     }
 
     public function testFind()
     {
-        $entities = $this->class->find();
+        $entities = $this->mapper->find();
 
         if (count($entities) > 0) {
             $this->assertInstanceOf(
-                $this->class->getEntityClass(),
+                $this->mapper->getEntityClass(),
                 $entities[0]
             );
         }
@@ -89,10 +89,10 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
     public function testFindById()
     {
         $testId = 1;
-        $entity = $this->class->findById($testId);
+        $entity = $this->mapper->findById($testId);
 
         $this->assertInstanceOf(
-            $this->class->getEntityClass(),
+            $this->mapper->getEntityClass(),
             $entity
         );
 
@@ -101,7 +101,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
             $entity->id
         );
 
-        $entity2 = $this->class->findById(9999);
+        $entity2 = $this->mapper->findById(9999);
 
         $this->assertNull(
             $entity2
@@ -112,34 +112,34 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('The entity table is invalid.');
-        $this->class->setEntityTable(null);
+        $this->mapper->setEntityTable(null);
     }
 
     public function testSetInvalidEntityTable2()
     {
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('The entity table is invalid.');
-        $this->class->setEntityTable("");
+        $this->mapper->setEntityTable("");
     }
 
     public function testSetEntityTable()
     {
-        $oldTableName = $this->class->getEntityTable();
+        $oldTableName = $this->mapper->getEntityTable();
         $this->assertInternalType('string', $oldTableName);
 
         $newTableName = uniqid("tab_");
-        $this->class->setEntityTable($newTableName);
+        $this->mapper->setEntityTable($newTableName);
 
         $this->assertEquals(
             $newTableName,
-            $this->class->getEntityTable()
+            $this->mapper->getEntityTable()
         );
 
         // Reset previous table name
-        $this->class->setEntityTable($oldTableName);
+        $this->mapper->setEntityTable($oldTableName);
         $this->assertEquals(
             $oldTableName,
-            $this->class->getEntityTable()
+            $this->mapper->getEntityTable()
         );
     }
 
@@ -150,7 +150,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
             'entityClass' => '\clagiordano\weblibs\dbabstraction\testdata\SampleEntity'
         ];
 
-        $this->class = new SampleMapper(
+        $this->mapper = new SampleMapper(
             $this->adapter,
             $mapperOptions
         );
@@ -165,7 +165,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
             'entityClass' => null
         ];
 
-        $this->class = new SampleMapper(
+        $this->mapper = new SampleMapper(
             $this->adapter,
             $mapperOptions
         );
@@ -180,7 +180,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
             'entityClass' => '\clagiordano\weblibs\dbabstraction\testdata\SampleEntity'
         ];
 
-        $this->class = new SampleMapper(
+        $this->mapper = new SampleMapper(
             $this->adapter,
             $mapperOptions
         );
@@ -189,11 +189,12 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
     public function testSetInvalidEntityClass()
     {
         $this->expectException('InvalidArgumentException');
-        $this->class->setEntityClass('InvalidClass');
+        $this->mapper->setEntityClass('InvalidClass');
     }
 
-    public function testInsert()
+    public function testInvalidInsert()
     {
-
+        $this->expectException('InvalidArgumentException');
+        $this->mapper->insert(null);
     }
 }
