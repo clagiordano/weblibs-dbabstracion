@@ -3,14 +3,18 @@
 namespace clagiordano\weblibs\dbabstraction\tests;
 
 use clagiordano\weblibs\dbabstraction\PDOAdapter;
+use clagiordano\weblibs\dbabstraction\testdata\SampleEntity;
 use clagiordano\weblibs\dbabstraction\testdata\SampleMapper;
 
 /**
  * Class SampleMapperTest
+ *
  * @package clagiordano\weblibs\dbabstraction\tests
  */
 class SampleMapperTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var SampleEntity $entity */
+    private $entity = null;
     /** @var SampleMapper $mapper */
     private $mapper = null;
     /** @var PDOAdapter $adapter */
@@ -197,4 +201,50 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
         $this->expectException('InvalidArgumentException');
         $this->mapper->insert(null);
     }
+
+    public function testInvalidUpdate()
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->mapper->update(null);
+    }
+
+    public function testInvalidDelete()
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->mapper->delete(null);
+    }
+
+    /**
+     * Test entity validity
+     * @group invalid
+     */
+    public function testInvalidDelete2()
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->mapper->delete(new \stdclass());
+    }
+
+    public function testInsert()
+    {
+        $this->entity = new SampleEntity(
+            [
+                'code' => 'sample',
+                'description' => 'sample entity'
+            ]
+        );
+
+        $this->assertInstanceOf(
+            'clagiordano\weblibs\dbabstraction\testdata\SampleEntity',
+            $this->entity
+        );
+
+        $lastId = $this->mapper->insert($this->entity);
+        $this->assertInternalType('integer', $lastId);
+        $this->assertTrue($lastId > 0);
+    }
+
+    public function testUpdate()
+    {
+    }
+
 }

@@ -15,40 +15,6 @@ class SampleMapper extends AbstractMapper
     protected $entityClass = null;
 
     /**
-     * Sample insert method
-     *
-     * @param SampleEntity $entity
-     * @return mixed
-     */
-    public function insert($entity)
-    {
-        if (!$entity instanceof SampleEntity) {
-            throw new \InvalidArgumentException(
-                __METHOD__ . ": Invalid entity type."
-            );
-        }
-
-        return $this->adapter->insert($this->entityTable, $entity->toArray());
-    }
-
-    /**
-     * Sample delete method
-     *
-     * @param mixed $id
-     * @param string $column
-     * @return mixed
-     * @internal param \SampleEntity $entity
-     */
-    public function delete($id, $column = 'id')
-    {
-        if ($id instanceof SampleEntity) {
-            $id = $id->id;
-        }
-
-        return $this->adapter->delete($this->entityTable, "{$column} = {$id}");
-    }
-
-    /**
      * Create a SampleEntity entity with the supplied data
      *
      * @param array $fields

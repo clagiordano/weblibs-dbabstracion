@@ -198,6 +198,13 @@ abstract class AbstractMapper implements MapperInterface
      */
     public function delete($entityId, $col = 'id')
     {
+        if (is_null($entityId)
+            || (!is_numeric($entityId) && !is_a($entityId, $this->entityClass))) {
+            throw new \InvalidArgumentException(
+                "Invalid entity or entityId argument."
+            );
+        }
+
         if ($entityId instanceof $this->entityClass) {
             $entityId = $entityId->id;
         }
