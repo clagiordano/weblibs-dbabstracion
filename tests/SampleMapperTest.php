@@ -28,7 +28,16 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
             $this->adapter
         );
 
-        $this->class = new SampleMapper($this->adapter);
+        $mapperOptions = [
+            'entityTable' => 'tab_products',
+            'entityClass' => '\clagiordano\weblibs\dbabstraction\testdata\SampleEntity'
+        ];
+
+        $this->class = new SampleMapper(
+            $this->adapter,
+            $mapperOptions
+        );
+
         $this->assertInstanceOf(
             'clagiordano\weblibs\dbabstraction\testdata\SampleMapper',
             $this->class
@@ -134,7 +143,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFullConstructro()
+    public function testFullConstructor()
     {
         $mapperOptions = [
             'entityTable' => 'tab_products',
@@ -145,5 +154,41 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
             $this->adapter,
             $mapperOptions
         );
+    }
+
+    public function testInvalidConstructor()
+    {
+        $this->expectException('RuntimeException');
+
+        $mapperOptions = [
+            'entityTable' => 'tab_products',
+            'entityClass' => null
+        ];
+
+        $this->class = new SampleMapper(
+            $this->adapter,
+            $mapperOptions
+        );
+    }
+
+    public function testInvalidConstructor2()
+    {
+        $this->expectException('RuntimeException');
+
+        $mapperOptions = [
+            'entityTable' => null,
+            'entityClass' => '\clagiordano\weblibs\dbabstraction\testdata\SampleEntity'
+        ];
+
+        $this->class = new SampleMapper(
+            $this->adapter,
+            $mapperOptions
+        );
+    }
+
+    public function testSetInvalidEntityClass()
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->class->setEntityClass('InvalidClass');
     }
 }

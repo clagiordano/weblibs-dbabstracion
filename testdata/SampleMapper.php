@@ -11,8 +11,8 @@ use clagiordano\weblibs\dbabstraction\AbstractMapper;
  */
 class SampleMapper extends AbstractMapper
 {
-    protected $entityTable = 'tab_products';
-    protected $entityClass = 'clagiordano\weblibs\dbabstraction\testdata\SampleEntity';
+    protected $entityTable = null;
+    protected $entityClass = null;
 
     /**
      * Sample insert method
