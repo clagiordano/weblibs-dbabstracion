@@ -6,6 +6,12 @@ weblibs-dbabstraction is an simple and lightweight Abstraction library for the d
 ## Why use weblibs-dbabstraction ?
 The purpose of this project is to propose a simple and lightweight alternative solution instead of more big and complex projects such as Doctrine.
 
+## Installation
+The recommended way to install weblibs-dbabstraction is through [Composer](https://getcomposer.org).
+```bash
+composer require clagiordano/weblibs-dbabstraction
+```
+
 ## Description of the main components
 
 ### Adapter description
