@@ -185,9 +185,9 @@ abstract class AbstractMapper implements MapperInterface
 
         $entityId = $entity->id;
         $data = $entity->toArray();
-        unset($data['entityId']);
+        unset($data['id']);
 
-        return $this->adapter->update($this->entityTable, $data, "entityId = $entityId");
+        return $this->adapter->update($this->entityTable, $data, "id = $entityId");
     }
 
     /**

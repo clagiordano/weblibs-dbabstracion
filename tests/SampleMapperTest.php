@@ -245,6 +245,66 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdate()
     {
+        $updateString = 'sample entity update';
+        $this->entity = $this->mapper->find("code = 'sample'")[0];
+
+        $this->assertInstanceOf(
+            'clagiordano\weblibs\dbabstraction\testdata\SampleEntity',
+            $this->entity
+        );
+
+        $this->entity->description = $updateString;
+        $this->mapper->update($this->entity);
+
+        $this->entity = $this->mapper->findById($this->entity->id);
+        $this->assertInstanceOf(
+            'clagiordano\weblibs\dbabstraction\testdata\SampleEntity',
+            $this->entity
+        );
+
+        $this->assertEquals(
+            $updateString,
+            $this->entity->description
+        );
+    }
+
+    public function testDeleteById()
+    {
+        $this->entity = $this->mapper->find("code = 'sample'")[0];
+        $this->assertInstanceOf(
+            'clagiordano\weblibs\dbabstraction\testdata\SampleEntity',
+            $this->entity
+        );
+
+        $this->mapper->delete($this->entity->id);
+        $this->entity = $this->mapper->findById($this->entity->id);
+
+        $this->assertNull($this->entity);
+    }
+
+    public function testDeleteByEntity()
+    {
+        $this->entity = new SampleEntity(
+            [
+                'code' => 'sample',
+                'description' => 'sample entity'
+            ]
+        );
+
+        $this->assertInstanceOf(
+            'clagiordano\weblibs\dbabstraction\testdata\SampleEntity',
+            $this->entity
+        );
+
+        $lastId = $this->mapper->insert($this->entity);
+        $this->assertInternalType('integer', $lastId);
+        $this->assertTrue($lastId > 0);
+        $this->entity->id = $lastId;
+
+        $this->mapper->delete($this->entity);
+        $this->entity = $this->mapper->findById($lastId);
+
+        $this->assertNull($this->entity);
     }
 
 }
