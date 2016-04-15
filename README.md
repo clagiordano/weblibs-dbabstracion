@@ -1,4 +1,4 @@
-﻿# weblibs-dbabstraction
+# weblibs-dbabstraction
 weblibs-dbabstraction is an simple and lightweight Abstraction library for the database and ORM modules.
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/ba8db8b9-1af7-471b-965e-d055f23b6dce/big.png)](https://insight.sensiolabs.com/projects/ba8db8b9-1af7-471b-965e-d055f23b6dce)
@@ -69,7 +69,7 @@ class SampleMapper extends AbstractMapper
 {
 ```
 
-then must be declare two protected properties to connect database table for persistence 
+then must be declare two protected properties to connect database table for persistence
 and the related entity class:
 ```php
 protected $entityTable = 'sample_table';
@@ -119,4 +119,4 @@ As you can see, this overrided method require explicitly an instance of SampleEn
 the same way you can run a validation or additional arguments formatting/sanitizing or whatever you want.
 
 ## Legal
-*Copyright (C) 2015 Claudio Giordano <claudio.giordano@autistici.org>*
+*Copyright (C) Claudio Giordano <claudio.giordano@autistici.org>*
