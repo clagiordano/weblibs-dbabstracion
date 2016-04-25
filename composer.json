@@ -3,7 +3,7 @@
   "description": "Abstraction library for the database and ORM modules",
   "type": "library",
   "homepage": "https://github.com/clagiordano/weblibs-dbabstraction.git",
-  "license": "GPL-3.0",
+  "license": "LGPL-3.0",
   "authors": [
     {
       "name": "Claudio Giordano",
