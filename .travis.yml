@@ -7,7 +7,7 @@ php:
   - 7.0
 
 before_script:
-  - apt-get install phploc
+  - sudo apt-get install phploc -y
   - composer selfupdate --quiet
   - composer install --prefer-dist --no-interaction --no-progress
 
