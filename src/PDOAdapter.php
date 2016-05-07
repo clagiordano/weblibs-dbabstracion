@@ -212,6 +212,10 @@ class PDOAdapter implements DatabaseAdapterInterface
             $queryString .= "WHERE {$conditions} ";
         }
 
+        if (!is_null($order)) {
+            $queryString .= "ORDER BY {$order} ";
+        }
+
         if (!is_null($limit)) {
             $queryString .= "LIMIT {$limit} ";
         }
@@ -220,9 +224,6 @@ class PDOAdapter implements DatabaseAdapterInterface
             $queryString .= "OFFSET {$offset} ";
         }
 
-        if (!is_null($order)) {
-            $queryString .= "ORDER BY {$order} ";
-        }
 
         $queryString .= ";";
 
