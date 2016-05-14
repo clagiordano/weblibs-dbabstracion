@@ -1,3 +1,5 @@
+![BuildStatus](https://travis-ci.org/clagiordano/weblibs-dbabstraction.svg?branch=master) ![License](https://img.shields.io/github/license/clagiordano/weblibs-dbabstraction.svg)
+
 # weblibs-dbabstraction
 weblibs-dbabstraction is an simple and lightweight Abstraction library for the database and ORM modules.
 
