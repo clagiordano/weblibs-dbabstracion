@@ -18,7 +18,7 @@ before_script:
       `id` int(11) NOT NULL AUTO_INCREMENT,
       `text` varchar(20) NOT NULL,
       `description` varchar(50) NOT NULL,
-      `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      `timestamp` datetime NOT NULL,
       PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1;' -u root
 
