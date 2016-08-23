@@ -20,6 +20,6 @@ before_script:
       `description` varchar(50) NOT NULL,
       `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='latin1_swedish_ci;' -uroot
+    ) ENGINE=InnoDB DEFAULT CHARSET=latin1;' -uroot
 
 script: phpunit -c build/phpunit.xml
