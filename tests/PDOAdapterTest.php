@@ -15,7 +15,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->object = new PDOAdapter('localhost', 'test', 'test', 'sample');
+        $this->object = new PDOAdapter('127.0.0.1', 'travis', '', 'sample');
 
         $this->assertInstanceOf(
             'clagiordano\weblibs\dbabstraction\PDOAdapter',

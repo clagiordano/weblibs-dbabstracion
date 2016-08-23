@@ -25,7 +25,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->adapter = new PDOAdapter('localhost', 'test', 'test', 'sample');
+        $this->adapter = new PDOAdapter('127.0.0.1', 'travis', '', 'sample');
 
         $this->assertInstanceOf(
             'clagiordano\weblibs\dbabstraction\PDOAdapter',

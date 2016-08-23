@@ -7,8 +7,19 @@ php:
   - 7.0
   - hhvm
 
+services:
+  - mysql
+
 before_script:
   - travis_retry composer self-update
   - travis_retry composer update --prefer-source --no-interaction --dev
+  - mysql -e 'CREATE DATABASE sample;' -uroot
+  - mysql -e 'CREATE TABLE `tab_sample` (
+      `id` int(11) NOT NULL AUTO_INCREMENT,
+      `text` varchar(20) NOT NULL,
+      `description` varchar(50) NOT NULL,
+      `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='latin1_swedish_ci;' -uroot
 
 script: phpunit -c build/phpunit.xml
