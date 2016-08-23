@@ -114,15 +114,19 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
 
     public function testSetInvalidEntityTable()
     {
-        $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage('The entity table is invalid.');
+        $this->setExpectedException(
+            'InvalidArgumentException',
+            'The entity table is invalid.'
+        );
         $this->mapper->setEntityTable(null);
     }
 
     public function testSetInvalidEntityTable2()
     {
-        $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage('The entity table is invalid.');
+        $this->setExpectedException(
+            'InvalidArgumentException',
+            'The entity table is invalid.'
+        );
         $this->mapper->setEntityTable("");
     }
 
@@ -162,7 +166,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidConstructor()
     {
-        $this->expectException('RuntimeException');
+        $this->setExpectedException('RuntimeException');
 
         $mapperOptions = [
             'entityTable' => 'tab_products',
@@ -177,7 +181,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidConstructor2()
     {
-        $this->expectException('RuntimeException');
+        $this->setExpectedException('RuntimeException');
 
         $mapperOptions = [
             'entityTable' => null,
@@ -192,25 +196,25 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
 
     public function testSetInvalidEntityClass()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->setExpectedException('InvalidArgumentException');
         $this->mapper->setEntityClass('InvalidClass');
     }
 
     public function testInvalidInsert()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->setExpectedException('InvalidArgumentException');
         $this->mapper->insert(null);
     }
 
     public function testInvalidUpdate()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->setExpectedException('InvalidArgumentException');
         $this->mapper->update(null);
     }
 
     public function testInvalidDelete()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->setExpectedException('InvalidArgumentException');
         $this->mapper->delete(null);
     }
 
@@ -220,8 +224,8 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidDelete2()
     {
-        $this->expectException('InvalidArgumentException');
-        $this->mapper->delete(new \stdclass());
+        $this->setExpectedException('InvalidArgumentException');
+        $this->mapper->delete(new \stdClass());
     }
 
     public function testInsert()
