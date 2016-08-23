@@ -20,6 +20,9 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
     /** @var PDOAdapter $adapter */
     private $adapter = null;
 
+    /** @var integer $lastId */
+    private $lastId = null;
+
     /**
      *
      */
@@ -76,40 +79,6 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
     {
         $tableName = $this->mapper->getEntityTable();
         $this->assertInternalType('string', $tableName);
-    }
-
-    public function testFind()
-    {
-        $entities = $this->mapper->find();
-
-        if (count($entities) > 0) {
-            $this->assertInstanceOf(
-                $this->mapper->getEntityClass(),
-                $entities[0]
-            );
-        }
-    }
-
-    public function testFindById()
-    {
-        $testId = 1;
-        $entity = $this->mapper->findById($testId);
-
-        $this->assertInstanceOf(
-            $this->mapper->getEntityClass(),
-            $entity
-        );
-
-        $this->assertEquals(
-            $testId,
-            $entity->id
-        );
-
-        $entity2 = $this->mapper->findById(9999);
-
-        $this->assertNull(
-            $entity2
-        );
     }
 
     public function testSetInvalidEntityTable()
@@ -230,6 +199,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
 
     public function testInsert()
     {
+        $this->lastId = null;
         $this->entity = new SampleEntity(
             [
                 'text' => 'sample',
@@ -242,9 +212,44 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
             $this->entity
         );
 
-        $lastId = $this->mapper->insert($this->entity);
-        $this->assertInternalType('integer', $lastId);
-        $this->assertTrue($lastId > 0);
+        $this->lastId = $this->mapper->insert($this->entity);
+        $this->assertInternalType('integer', $this->lastId);
+        $this->assertTrue($this->lastId > 0);
+    }
+
+    public function testFind()
+    {
+        $entities = $this->mapper->find();
+
+        if (count($entities) > 0) {
+            $this->assertInstanceOf(
+                $this->mapper->getEntityClass(),
+                $entities[0]
+            );
+        }
+    }
+
+    public function testFindById()
+    {
+        $this->lastId = 4;
+
+        $entity = $this->mapper->findById($this->lastId);
+
+        $this->assertInstanceOf(
+            $this->mapper->getEntityClass(),
+            $entity
+        );
+
+        $this->assertEquals(
+            $this->lastId,
+            $entity->id
+        );
+
+        $entity2 = $this->mapper->findById(9999);
+
+        $this->assertNull(
+            $entity2
+        );
     }
 
     public function testUpdate()

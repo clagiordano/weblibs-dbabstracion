@@ -29,7 +29,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function testFailedConnection()
     {
-        $this->object = new PDOAdapter('localhosta', 'invalid', 'invalid', 'sample');
+        $this->object = new PDOAdapter('127.0.0.1', 'invalid', 'invalid', 'sample');
 
         $this->assertInstanceOf(
             'clagiordano\weblibs\dbabstraction\PDOAdapter',
@@ -40,6 +40,26 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->object->connect();
 
         $this->assertFalse($this->object->hasExecutionStatus());
+    }
+
+    /**
+     * @group insert
+     */
+    public function testInsert()
+    {
+        for ($i = 0; $i < 3; $i++) {
+            $lastId = $this->object->insert(
+                "tab_sample",
+                [
+                    'text' => 'testInsert',
+                    'description' => 'test description'
+                ]
+            );
+
+            $this->assertInternalType('integer', $lastId);
+            $this->assertTrue(($lastId > 0));
+            $this->assertTrue($this->object->hasExecutionStatus());
+        }
     }
 
     /**
@@ -127,8 +147,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @brief
-     * @return
+     *
      */
     public function testSelectAndDisconnect()
     {
@@ -147,25 +166,6 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($countRows, $this->object->getAffectedRows());
 
         $this->assertTrue($this->object->disconnect());
-        $this->assertTrue($this->object->hasExecutionStatus());
-    }
-
-    /**
-     * @brief
-     * @return
-     */
-    public function testInsert()
-    {
-        $lastId = $this->object->insert(
-            "tab_sample",
-            [
-                'text' => 'testInsert',
-                'description' => 'test description'
-            ]
-        );
-
-        $this->assertInternalType('integer', $lastId);
-        $this->assertTrue(($lastId > 0));
         $this->assertTrue($this->object->hasExecutionStatus());
     }
 
