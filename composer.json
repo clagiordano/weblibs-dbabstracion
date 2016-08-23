@@ -4,6 +4,7 @@
   "type": "library",
   "homepage": "https://github.com/clagiordano/weblibs-dbabstraction.git",
   "license": "LGPL-3.0",
+  "keywords": ["clagiordano", "weblibs", "database", "orm", "entity", "abstraction", "library", "mysql", "pdo"],
   "authors": [
     {
       "name": "Claudio Giordano",
