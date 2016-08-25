@@ -14,12 +14,7 @@ before_script:
   - travis_retry composer self-update
   - travis_retry composer update --prefer-source --no-interaction --dev
   - mysql -e 'CREATE DATABASE sample;' -u root
-  - mysql -e 'use sample; CREATE TABLE `tab_sample` (
-      `id` int(11) NOT NULL AUTO_INCREMENT,
-      `text` varchar(20) NOT NULL,
-      `description` varchar(50) NOT NULL,
-      `timestamp` datetime NOT NULL,
-      PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=latin1;' -u root
+  - mysql -e 'use sample; CREATE TABLE `tab_sample` (`id` int(11) NOT NULL AUTO_INCREMENT, `text` varchar(20) NOT NULL, `description` varchar(50) NOT NULL, `timestamp` datetime NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;' -u root
 
-script: phpunit -c build/phpunit.xml
+script: 
+  phpunit -c build/phpunit.xml
