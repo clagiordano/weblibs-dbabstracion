@@ -3,7 +3,6 @@
 namespace clagiordano\weblibs\dbabstraction\tests;
 
 use clagiordano\weblibs\dbabstraction\PDOAdapter;
-use \PHPUnit_Framework_TestCase;
 
 /**
  * Class PDOAdapterTest
