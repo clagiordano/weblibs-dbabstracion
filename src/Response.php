@@ -5,7 +5,7 @@ namespace clagiordano\weblibs\dbabstraction;
 /**
  * Response class for output/return formatted JSON data from array
  *
- * @author Claudio Giordano <claudio.giordano@autistici.org>
+ * @package clagiordano\weblibs\dbabstraction
  */
 class Response
 {
