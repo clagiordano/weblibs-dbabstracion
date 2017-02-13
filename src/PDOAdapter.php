@@ -11,17 +11,25 @@ use \PDO;
  */
 class PDOAdapter implements DatabaseAdapterInterface
 {
+    /** @var string $dbHostname */
     protected $dbHostname;
+    /** @var string $dbUsername */
     protected $dbUsername;
+    /** @var string $dbPassword */
     protected $dbPassword;
+    /** @var string $dbName */
     protected $dbName;
+    /** @var string $dbDriver */
     protected $dbDriver;
+    /** @var string $dbCharset */
     protected $dbCharset;
-    protected $driverOptions;
+    /** @var array $driverOptions */
+    protected $driverOptions = [];
     /** @var \PDO $dbConnection */
     protected $dbConnection;
     /** @var bool $executionStatus */
     protected $executionStatus = false;
+    /** @var int $lastInsertedId */
     protected $lastInsertedId;
     /** @var \PDOStatement $resourceHandle */
     protected $resourceHandle;
