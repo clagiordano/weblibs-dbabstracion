@@ -19,9 +19,8 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
     private $mapper = null;
     /** @var PDOAdapter $adapter */
     private $adapter = null;
-
     /** @var integer $lastId */
-    private $lastId = null;
+    protected static $lastId;
 
     /**
      *
@@ -46,8 +45,18 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'clagiordano\weblibs\dbabstraction\testdata\SampleMapper',
+            '\clagiordano\weblibs\dbabstraction\testdata\SampleMapper',
             $this->mapper
+        );
+
+        $this->assertEquals(
+            'tab_sample',
+            $this->mapper->getEntityTable()
+        );
+
+        $this->assertEquals(
+            '\clagiordano\weblibs\dbabstraction\testdata\SampleEntity',
+            $this->mapper->getEntityClass()
         );
     }
 
@@ -199,7 +208,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
 
     public function testInsert()
     {
-        $this->lastId = null;
+        self::$lastId = null;
         $this->entity = new SampleEntity(
             [
                 'text' => 'sample',
@@ -208,13 +217,13 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'clagiordano\weblibs\dbabstraction\testdata\SampleEntity',
+            '\clagiordano\weblibs\dbabstraction\testdata\SampleEntity',
             $this->entity
         );
 
-        $this->lastId = $this->mapper->insert($this->entity);
-        $this->assertInternalType('integer', $this->lastId);
-        $this->assertTrue($this->lastId > 0);
+        self::$lastId = $this->mapper->insert($this->entity);
+        $this->assertInternalType('integer', self::$lastId);
+        $this->assertTrue(self::$lastId > 0);
     }
 
     public function testFind()
@@ -231,9 +240,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
 
     public function testFindById()
     {
-        $this->lastId = 4;
-
-        $entity = $this->mapper->findById($this->lastId);
+        $entity = $this->mapper->findById(self::$lastId);
 
         $this->assertInstanceOf(
             $this->mapper->getEntityClass(),
@@ -241,7 +248,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(
-            $this->lastId,
+            self::$lastId,
             $entity->id
         );
 

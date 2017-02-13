@@ -38,13 +38,13 @@ abstract class AbstractEntity
                 "Setting the field '$name' is not allowed for this entity."
             );
         }
-        
+
         $mutator = 'set' . ucfirst($name);
         if (method_exists($this, $mutator) && is_callable([$this, $mutator])) {
-            $this->$mutator($value);
-        } else {
-            $this->values[$name] = $value;
+            return $this->$mutator($value);
         }
+
+        $this->values[$name] = $value;
     }
 
     /**
@@ -86,7 +86,7 @@ abstract class AbstractEntity
                 "The field '$name' is not allowed for this entity."
             );
         }
-        
+
         return isset($this->values[$name]);
     }
 

@@ -28,7 +28,7 @@ class PDOAdapter implements DatabaseAdapterInterface
     /** @var \PDO $dbConnection */
     protected $dbConnection;
     /** @var bool $excecutionStatus */
-    protected $excecutionStatus = false;
+    protected $executionStatus = false;
     /** @var int $lastInsertedId */
     protected $lastInsertedId;
     /** @var \PDOStatement $resourceHandle */
