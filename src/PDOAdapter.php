@@ -77,6 +77,10 @@ class PDOAdapter implements DatabaseAdapterInterface
      */
     public function connect()
     {
+        if (!is_null($this->dbConnection)) {
+            return $this->dbConnection;
+        }
+
         $dsnString = "{$this->dbDriver}:host={$this->dbHostname};dbname={$this->dbName};";
         $dsnString .= "charset={$this->dbCharset}";
         /*
