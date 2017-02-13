@@ -27,8 +27,8 @@ class PDOAdapter implements DatabaseAdapterInterface
     protected $driverOptions = [];
     /** @var \PDO $dbConnection */
     protected $dbConnection;
-    /** @var bool $executionStatus */
-    protected $executionStatus = false;
+    /** @var bool $excecutionStatus */
+    protected $excecutionStatus = false;
     /** @var int $lastInsertedId */
     protected $lastInsertedId;
     /** @var \PDOStatement $resourceHandle */
@@ -93,10 +93,10 @@ class PDOAdapter implements DatabaseAdapterInterface
                 "{$this->dbPassword}",
                 $this->driverOptions
             );
-        } catch (\PDOException $ex) {
+        } catch (\PDOException $excc) {
             // Error during database connection, check params.
             throw new \InvalidArgumentException(
-                __METHOD__.': '.$ex->getMessage()
+                __METHOD__.': '.$excc->getMessage()
             );
         }
 
@@ -159,7 +159,7 @@ class PDOAdapter implements DatabaseAdapterInterface
 
             // finally execute the query
             $this->dbConnection->commit();
-        } catch (\PDOException $ex) {
+        } catch (\PDOException $exc) {
             // If an error occurs, execute rollback
             $this->dbConnection->rollBack();
 
@@ -168,7 +168,7 @@ class PDOAdapter implements DatabaseAdapterInterface
             $this->resourceHandle->closeCursor();
 
             throw new \RuntimeException(
-                __METHOD__.": {$ex->getMessage()}\nqueryString: {$queryString}"
+                __METHOD__.": {$exc->getMessage()}\nqueryString: {$queryString}"
             );
         }
 
