@@ -24,7 +24,7 @@ class PDOAdapter implements DatabaseAdapterInterface
     /** @var string $dbCharset */
     protected $dbCharset;
     /** @var array $driverOptions */
-    protected $driverOptions = [];
+    protected $driverOptions;
     /** @var \PDO $dbConnection */
     protected $dbConnection;
     /** @var bool $excecutionStatus */
