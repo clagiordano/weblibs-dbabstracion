@@ -35,7 +35,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
         );
 
         $mapperOptions = [
-            'entityTable' => 'tab_sample',
+            'entityTable' => 'tab_products',
             'entityClass' => '\clagiordano\weblibs\dbabstraction\testdata\SampleEntity'
         ];
 
@@ -50,7 +50,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(
-            'tab_sample',
+            'tab_products',
             $this->mapper->getEntityTable()
         );
 
@@ -132,7 +132,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
     public function testFullConstructor()
     {
         $mapperOptions = [
-            'entityTable' => 'tab_sample',
+            'entityTable' => 'tab_products',
             'entityClass' => '\clagiordano\weblibs\dbabstraction\testdata\SampleEntity'
         ];
 
@@ -147,7 +147,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('RuntimeException');
 
         $mapperOptions = [
-            'entityTable' => 'tab_sample',
+            'entityTable' => 'tab_products',
             'entityClass' => null
         ];
 
@@ -211,8 +211,10 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
         self::$lastId = null;
         $this->entity = new SampleEntity(
             [
-                'text' => 'sample',
-                'description' => 'sample entity'
+                'code' => 'test',
+                'model' => 'test',
+                'brand' => 'testInsert',
+                'description' => 'test description'
             ]
         );
 
@@ -262,7 +264,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
     public function testUpdate()
     {
         $updateString = 'sample entity update';
-        $this->entity = $this->mapper->find("text = 'sample'")[0];
+        $this->entity = $this->mapper->find("code = 'test'")[0];
 
         $this->assertInstanceOf(
             'clagiordano\weblibs\dbabstraction\testdata\SampleEntity',
@@ -286,7 +288,7 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
 
     public function testDeleteById()
     {
-        $this->entity = $this->mapper->find("text = 'sample'")[0];
+        $this->entity = $this->mapper->find("code = 'test'")[0];
         $this->assertInstanceOf(
             'clagiordano\weblibs\dbabstraction\testdata\SampleEntity',
             $this->entity
@@ -302,8 +304,10 @@ class SampleMapperTest extends \PHPUnit_Framework_TestCase
     {
         $this->entity = new SampleEntity(
             [
-                'text' => 'sample',
-                'description' => 'sample entity'
+                'code' => 'test',
+                'model' => 'test',
+                'brand' => 'testInsert',
+                'description' => 'test description'
             ]
         );
 

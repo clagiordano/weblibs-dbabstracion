@@ -23,10 +23,6 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @brief
-     * @return
-     */
     public function testFailedConnection()
     {
         $this->object = new PDOAdapter('127.0.0.1', 'invalid', 'invalid', 'sample');
@@ -49,9 +45,11 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
     {
         for ($i = 0; $i < 3; $i++) {
             $lastId = $this->object->insert(
-                "tab_sample",
+                "tab_products",
                 [
-                    'text' => 'testInsert',
+                    'code' => 'test',
+                    'model' => 'test',
+                    'brand' => 'testInsert',
                     'description' => 'test description'
                 ]
             );
@@ -62,13 +60,9 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * @brief
-     * @return
-     */
     public function testQuery()
     {
-        $resource = $this->object->query('SELECT * FROM tab_sample');
+        $resource = $this->object->query('SELECT * FROM tab_products');
         $this->assertInstanceOf(
             'PDOStatement',
             $resource
@@ -84,7 +78,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
     public function testPreparedStatement()
     {
         $resource = $this->object->query(
-            'SELECT * FROM tab_sample WHERE id=:id',
+            'SELECT * FROM tab_products WHERE id=:id',
             [':id' => 1]
         );
         $this->assertInstanceOf(
@@ -99,13 +93,9 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->object->hasExecutionStatus());
     }
 
-    /**
-     * @brief
-     * @return
-     */
     public function testSelect()
     {
-        $countRows = $this->object->select('tab_sample');
+        $countRows = $this->object->select('tab_products');
         $this->assertInternalType(
             'integer',
             $countRows
@@ -151,7 +141,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function testSelectAndDisconnect()
     {
-        $countRows = $this->object->select('tab_sample');
+        $countRows = $this->object->select('tab_products');
         $this->assertInternalType(
             'integer',
             $countRows
@@ -171,7 +161,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testSelectWithWhere()
     {
-        $countRows = $this->object->select('tab_sample', "text = 'testInsert'");
+        $countRows = $this->object->select('tab_products', "brand = 'testInsert'");
         $this->assertInternalType(
             'integer',
             $countRows
@@ -186,7 +176,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testSelectWithLimit()
     {
-        $countRows = $this->object->select('tab_sample', null, null, null, 1);
+        $countRows = $this->object->select('tab_products', null, null, null, 1);
         $this->assertInternalType(
             'integer',
             $countRows
@@ -201,7 +191,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testSelectWithOffset()
     {
-        $countRows = $this->object->select('tab_sample', null, null, null, 1, 1);
+        $countRows = $this->object->select('tab_products', null, null, null, 1, 1);
         $this->assertInternalType(
             'integer',
             $countRows
@@ -216,7 +206,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testSelectWithOrder()
     {
-        $countRows = $this->object->select('tab_sample', null, "*", "id");
+        $countRows = $this->object->select('tab_products', null, "*", "id");
         $this->assertInternalType(
             'integer',
             $countRows
@@ -230,7 +220,7 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testFetchAll()
     {
-        $countRows = $this->object->select('tab_sample', null, null, null, 1, 1);
+        $countRows = $this->object->select('tab_products', null, null, null, 1, 1);
         $this->assertInternalType(
             'integer',
             $countRows
@@ -265,19 +255,15 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->object->hasExecutionStatus());
     }
 
-    /**
-     * @brief
-     * @return
-     */
     public function testUpdate()
     {
         $affectedRows = $this->object->update(
-            "tab_sample",
+            "tab_products",
             [
-                'text' => 'testUpdate',
+                'brand' => 'testUpdate',
                 'description' => 'test update description'
             ],
-            "text = 'testInsert'"
+            "brand = 'testInsert'"
         );
 
         $this->assertInternalType('integer', $affectedRows);
@@ -286,15 +272,11 @@ class PDOAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->object->hasExecutionStatus());
     }
 
-    /**
-     * @brief
-     * @return
-     */
     public function testDelete()
     {
         $affectedRows = $this->object->delete(
-            "tab_sample",
-            "text = 'testUpdate'"
+            "tab_products",
+            "brand = 'testUpdate'"
         );
 
         $this->assertInternalType('integer', $affectedRows);

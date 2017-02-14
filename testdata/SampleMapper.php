@@ -25,9 +25,9 @@ class SampleMapper extends AbstractMapper
         return new SampleEntity(
             [
                 'id' => $fields['id'],
-                'text' => $fields['text'],
+                'brand' => $fields['brand'],
+                'code' => $fields['code'],
                 'description' => $fields['description'],
-                'timestamp' => $fields['timestamp']
             ]
         );
     }
