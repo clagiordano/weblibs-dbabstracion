@@ -140,7 +140,7 @@ class PDOAdapter implements DatabaseAdapterInterface
     {
         if (!is_string($queryString) || empty($queryString)) {
             throw new \InvalidArgumentException(
-                __METHOD__.': The specified query is not valid.'
+                __METHOD__.': The specified query ' . var_export($queryString, true) . ' is not valid.'
             );
         }
 
@@ -203,7 +203,7 @@ class PDOAdapter implements DatabaseAdapterInterface
      * @param string $limit
      * @param string $offset
      *
-     * @return int number of affected rows
+     * @return int|string number of affected rows
      */
     public function select(
         $table,
@@ -212,8 +212,32 @@ class PDOAdapter implements DatabaseAdapterInterface
         $order = null,
         $limit = null,
         $offset = null
-    )
-    {
+    ) {
+        $queryString = $this->buildSelect($table, $conditions, $fields, $order, $limit, $offset);
+
+        $this->query($queryString);
+
+        return $this->countRows();
+    }
+
+    /**
+     * Build a select statement from params
+     *
+     * @param string $table
+     * @param string $conditions
+     * @param string $fields
+     * @param string $order
+     * @param string $limit
+     * @param string $offset
+     */
+    public function buildSelect(
+        $table,
+        $conditions = null,
+        $fields = null,
+        $order = null,
+        $limit = null,
+        $offset = null
+    ) {
         if (is_null($fields)) {
             $fields = "*";
         }
@@ -236,12 +260,10 @@ class PDOAdapter implements DatabaseAdapterInterface
             $queryString .= "OFFSET {$offset} ";
         }
 
-
+        $queryString = trim($queryString);
         $queryString .= ";";
 
-        $this->query($queryString);
-
-        return $this->countRows();
+        return $queryString;
     }
 
     /**
