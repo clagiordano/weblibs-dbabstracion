@@ -291,7 +291,7 @@ class PDOAdapter implements DatabaseAdapterInterface
      * Preparate values for execute
      *
      * @param array $arrayData
-     * @return string
+     * @return array
      */
     private function prepareValues($arrayData)
     {
