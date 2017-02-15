@@ -21,7 +21,7 @@ class Response
      * Create a Response object and set data
      *
      * @param array $data
-     * @return clagiordano\weblibs\dbabstraction\Response
+     * @return \clagiordano\weblibs\dbabstraction\Response
      */
     public function __construct(array $data = null)
     {
@@ -32,7 +32,7 @@ class Response
      * Set response data
      *
      * @param array $data
-     * @return clagiordano\weblibs\dbabstraction\Response
+     * @return \clagiordano\weblibs\dbabstraction\Response
      */
     public function setResponse(array $data = null)
     {
@@ -60,7 +60,7 @@ class Response
     /**
      * Append status info to a response data
      *
-     * @return clagiordano\weblibs\dbabstraction\Response
+     * @return \clagiordano\weblibs\dbabstraction\Response
      */
     private function setStatusInfo()
     {

@@ -28,6 +28,7 @@ abstract class AbstractEntity
     /**
      * Assign a value to the specified field via the corresponding mutator (if it exists);
      * otherwise, assign the value directly to the '$_values' array
+     *
      * @param $name
      * @param $value
      */

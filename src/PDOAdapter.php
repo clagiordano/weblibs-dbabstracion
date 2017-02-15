@@ -229,6 +229,7 @@ class PDOAdapter implements DatabaseAdapterInterface
      * @param string $order
      * @param string $limit
      * @param string $offset
+     * @return string
      */
     public function buildSelect(
         $table,

@@ -15,16 +15,33 @@ class Pager extends PDOAdapter
     /** @var int $totalResults */
     protected $totalResults = 0;
 
+    /**
+     * @param $pageLimit
+     */
     public function setPageLimit($pageLimit)
     {
         $this->pageLimit = (int)$pageLimit;
     }
 
+    /**
+     * @return int
+     */
     public function getPageLimit()
     {
         return $this->pageLimit;
     }
 
+    /**
+     * Build a select statement from params
+     *
+     * @param string $table
+     * @param string $conditions
+     * @param string $fields
+     * @param string $order
+     * @param string $limit
+     * @param string $offset
+     * @return string
+     */
     public function buildSelect(
         $table,
         $conditions = null,
@@ -46,11 +63,17 @@ class Pager extends PDOAdapter
         return $queryString;
     }
 
+    /**
+     * @param string $selectPage
+     */
     public function getPage($selectPage = 'first')
     {
         // $this->
     }
 
+    /**
+     *
+     */
     protected function calculateRange()
     {
         switch ($Page) {
