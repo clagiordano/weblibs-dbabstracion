@@ -72,37 +72,42 @@ class Pager extends PDOAdapter
     }
 
     /**
-     *
+     * @param string $selectPage
      */
-    protected function calculateRange()
+    protected function calculateRange($selectPage = 'first')
     {
-        switch ($Page) {
+        switch ($selectPage) {
             case "all":
                 // no limit;
                 break;
+
+            default:
             case "first":
                 $start = 0;
-                $order .= " LIMIT $start, " . $PageLimit;
+                $order .= " LIMIT $start, " . $this->getPageLimit();
                 break;
+
             case "last":
-                $start = (intval($TotResults / $PageLimit) * $PageLimit);
-                $order .= " LIMIT $start, " . $PageLimit;
+                $start = (intval($this->totalResults / $this->getPageLimit()) * $this->getPageLimit());
+                $order .= " LIMIT $start, " . $this->getPageLimit();
                 break;
+
             case "next":
-                if (($_SESSION['start'] + $PageLimit) > $TotResults) {
-                    $start = (intval($TotResults / $PageLimit) * $PageLimit);
+                if (($_SESSION['start'] + $this->getPageLimit()) > $this->totalResults) {
+                    $start = (intval($this->totalResults / $this->getPageLimit()) * $this->getPageLimit());
                 } else {
-                    $start = ($_SESSION['start'] + $PageLimit);
+                    $start = ($_SESSION['start'] + $this->getPageLimit());
                 }
-                $order .= " LIMIT $start, " . $PageLimit;
+                $order .= " LIMIT $start, " . $this->getPageLimit();
                 break;
+
             case "prev":
-                if (($_SESSION['start'] - $PageLimit) < 0) {
+                if (($_SESSION['start'] - $this->getPageLimit()) < 0) {
                     $start = 0;
                 } else {
-                    $start = ($_SESSION['start'] - $PageLimit);
+                    $start = ($_SESSION['start'] - $this->getPageLimit());
                 }
-                $order .= " LIMIT $start, " . $PageLimit;
+                $order .= " LIMIT $start, " . $this->getPageLimit();
                 break;
         }
     }
